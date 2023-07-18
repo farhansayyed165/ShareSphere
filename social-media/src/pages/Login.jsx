@@ -1,13 +1,20 @@
-import { React, useState, useEffect } from "react"
+import { React, useState } from "react"
 import { loginUser } from "../api/userApi"
+// import Cookies from 'universal-cookie';
+import {useCookies} from 'react-cookie'
+
 
 
 export default function Login() {
-    const [loginData, setLoginData] = useState({ email: "", password: "" })
-    function handleSubmit(e) {
+    const [cookies, setCookies] = useCookies(['access-token', 'refresh-token'])
+    const [loginData, setLoginData] = useState({ email: "", password: "" });
+
+    async function handleSubmit(e) {
         e.preventDefault()
-        loginUser(loginData)
-        .then(res=>console.log(res))
+
+        const response = await loginUser(loginData, cookies['access-token'])
+        setCookies('access-token',response.accessToken, {path:'/',sameSite:"strict"})
+        console.log(response)
     }
     function handleChange(e) {
         const { name, value } = e.target;

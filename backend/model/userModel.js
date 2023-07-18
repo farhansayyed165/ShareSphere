@@ -24,8 +24,6 @@ const userSchema = mongoose.Schema({
     password:{
         type:String,
         required:true,
-        minlenght:6,
-        maxlength:16,
     },
     avatar:{
         type:String,
@@ -33,8 +31,8 @@ const userSchema = mongoose.Schema({
     },
     gender:{
         type:String,
-        enum:["Male","Female","Other"],
-        default:"Male"
+        enum:["male","female","other","non-binary","perfer not to answer"],
+        default:"perfer not to answer"
     },
     mobile:{
         type:String,

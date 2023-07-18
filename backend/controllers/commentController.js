@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Comment = require("../model/commentModel");
+const Post = require('../model/postsModel')
+const User = require("../model/userModel")
 
 
 const getComment = asyncHandler(async (req, res) => {
@@ -7,7 +9,9 @@ const getComment = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error("Can't find any Post")
     }
-    const comment = await Comment.findOne(req.params.id);
+    const id = req.params.id
+    const comment = await Comment.findById(id);
+    // console.log(comment)
     res.status(200).json({ comment })
 });
 
@@ -25,18 +29,37 @@ const getComments = asyncHandler(async (req, res) => {
 
 const createComment = asyncHandler(async (req, res) => {
     const { content, postId } = req.body;
-    if (!content) {
-        res.status(400);
-        throw new Error("invalid request");
+    if (!content || !postId) {
+        res.status(400)
+        throw new Error("Bad Request")
     }
-    const id = req.id;
+    const post = await Post.findById(postId);
+    if (!post) {
+        res.status(404)
+        throw new Error("post not found")
+    }
+    const userId = req.user._id;
+    const user = await User.findById(userId)
+    console.log(user)
     const date = new Date().toISOString();
-
-    const comment = await Comment.create({
-        content, userId: id, addedDate: date, postId: postId
+    let comment = await Comment.create({
+        content,
+        postId,
+        addedDate: date,
+        username:user.username,
+        user:user.fullname
     });
-    res.status(201).json({ comment });
+    const commentsArray = post.comments;
+    commentsArray.push(comment._id);
+    const updatedPost = await Post.findByIdAndUpdate(postId, {
+        comments: commentsArray
+    },
+        { new: true })
+    comment = {...comment, userId}
+    res.status(201).json({ message: "Comment Created successfully!", comment, updatedPost })
 });
+
+
 
 const deleteComment = asyncHandler(async (req, res) => {
     const comment = await Comment.findById(req.params.id)

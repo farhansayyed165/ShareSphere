@@ -6,17 +6,18 @@ const jwt = require("jsonwebtoken")
 
 const createUser = asyncHandler (async (req,res,next)=>{
     // Extracting and Checking if the email and passwords exist
-    const {name, email, password} = req.body;
+    const {fullname, email, password, gender, username} = req.body;
     // if any on of it doesn't exist, we throw an error and add return a status of 400
-    if(!email || !password || !name){
+    if(!email || !password || !fullname || !gender ||!username ){
         res.status(400);
         throw new Error("All fields are mandatory")
     }
 
     // The following lines are checking if the email has already been used
-    const userAvb = await User.findOne({email});
+    const userE = await User.findOne({email});
+    const userU = await User.findOne({username});
     // if the email exists, we throw an error
-    if(userAvb){
+    if(userE || userU){
         res.status(400);
         throw new Error("Email already registered")
     }
@@ -25,13 +26,15 @@ const createUser = asyncHandler (async (req,res,next)=>{
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log("Hashed Password: ", hashedPassword);
     const newUser = await User.create({
-        name,
+        username,
         email,
-        password: hashedPassword
+        password: hashedPassword, 
+        fullname,
+        gender,
     })
 
     if(newUser){
-        res.status(201).json({_id:newUser.id, email:newUser.email, message:"User Created Succefully"})
+        res.status(201).json({ message:"User Created Succefully", user:newUser})
     }else{
         res.status(400)
         throw new Error("User data is not valid")
@@ -42,6 +45,7 @@ const createUser = asyncHandler (async (req,res,next)=>{
 
 
 const loginUser = asyncHandler(async (req,res,next)=>{
+    console.log(req.headers)
     // Extracting and Checking if the email and passwords exist
     const {email, password} = req.body;
     // if any on of it doesn't exist, we throw an error and add return a status of 400
@@ -56,10 +60,7 @@ const loginUser = asyncHandler(async (req,res,next)=>{
     if (user && bcrypt.compare(password, user.password)){
         const accessToken = jwt.sign(
             {
-                user:{
-                    email:user.email,
-                    id:user.id
-                }
+                user
             },
             process.env.JWT_SECRET,
             {expiresIn: "10d"}
@@ -74,8 +75,21 @@ const loginUser = asyncHandler(async (req,res,next)=>{
 })
 
 const viewProfile = asyncHandler (async (req, res)=>{
-    const id = req.params.id
+    console.log(req.cookies)
+    const id = req.user._id
     const details = await User.findById(id);
+    if(!details){
+        res.status(404)
+        throw new Error("User data is not valid")
+    }
+    details.password = null;
+    res.status(200).json(details)
+})
+
+const viewProfileUsername = asyncHandler (async (req, res)=>{
+    console.log(req.headers)
+    const username = req.params.username
+    const details = await User.findOne({username});
     if(!details){
         res.status(404)
         throw new Error("User data is not valid")
@@ -105,4 +119,4 @@ const deleteUser = asyncHandler(async (req,res)=>{
     res.json(user).status(200);
 });
 
-module.exports = {createUser, loginUser, viewProfile,updateUser, deleteUser}
+module.exports = {createUser, loginUser, viewProfile,viewProfileUsername,updateUser, deleteUser}

@@ -3,15 +3,14 @@ const router = express.Router();
 const validateToken = require("../middleware/validateToken");
 const {getComment, getComments,createComment,deleteComment, updateComment, likeComment} = require("../controllers/commentController");
 
-router.use(validateToken);
-
 router.get("/", getComments);
 
 router.get("/:id", getComment);
 
-router.post("/", createComment);
 
-router.put("/update", likeComment);
+router.post("/createComment",validateToken, createComment);
+
+router.put("/update", updateComment);
 
 router.put("/like/:id", likeComment);
 
