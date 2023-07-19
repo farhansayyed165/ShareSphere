@@ -1,6 +1,8 @@
 const express = require("express");
 const connectDb = require("./config/dbConnect");
 const errorHandler = require("./middleware/errorHandler");
+const validateToken = require("./middleware/validateToken");
+const CheckToken = require("./controllers/validateTokenController")
 connectDb()
 
 const app = express();
@@ -21,6 +23,7 @@ app.use(express.json());
 // app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(errorHandler);
 
+app.get("/api/validateToken", validateToken,CheckToken)
 
 app.use("/api/users", require("./routes/userRoute"))
 

@@ -7,7 +7,7 @@ router.post("/signup", createUser);
 
 router.post("/login", loginUser);
 
-router.get("/profile" , validateToken, viewProfile);
+// router.get("/profile" , validateToken, viewProfile);
 
 router.get("/profile/:username" , viewProfileUsername);
 

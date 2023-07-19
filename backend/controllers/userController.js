@@ -65,7 +65,7 @@ const loginUser = asyncHandler(async (req,res,next)=>{
             process.env.JWT_SECRET,
             {expiresIn: "10d"}
         )
-        res.status(200).json({accessToken})
+        res.status(200).json({accessToken,user})
     }
     else{
         res.status(401);
@@ -99,13 +99,13 @@ const viewProfileUsername = asyncHandler (async (req, res)=>{
 })
 
 const updateUser = asyncHandler (async (req,res)=>{
-    const id = req.user.id;
-    const updatedUser = await Post.findByIdAndUpdate(
+    const id = req.user._id;
+    const updatedUser = await User.findByIdAndUpdate(
         id,
         req.body,
         { new: true }
     );
-    res.status(400).json(updatedUser)
+    res.status(200).json(updatedUser)
 })
 
 const deleteUser = asyncHandler(async (req,res)=>{

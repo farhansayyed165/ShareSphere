@@ -49,7 +49,7 @@ export async function updateUser(data, token){
         credentials: "same-origin", 
         headers: {
         "Content-Type": "application/json",
-        Authentication: `Bearer ${token}`
+        Authorization: `Bearer ${token}`
         },
         redirect: "follow", 
         referrerPolicy: "no-referrer", 

@@ -3,8 +3,11 @@ import { useParams } from 'react-router-dom';
 import { getPost } from '../api/postApi';
 import { useCookies } from 'react-cookie';
 import { nanoid } from 'nanoid';
-import CreateComment from '../components/CreateComment';
-import Comments from '../components/Comments';
+import CreateComment from '../components/comment/CreateComment';
+import Comments from '../components/comment/Comments';
+import Auth from '../components/Auth';
+
+
 
 const Post = () => {
     const postId = useParams().postId
@@ -47,6 +50,7 @@ const Post = () => {
 
         </div>
         <div>
+            
             <CreateComment postId={postId} refresh={setRefreshOnComments}></CreateComment>
             {commentsComponent}
         </div>

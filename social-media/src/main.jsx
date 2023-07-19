@@ -1,28 +1,34 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import ReactDOM, { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { Provider } from 'react-redux'
-import { configureStore } from '@reduxjs/toolkit'
-import { userReducer } from './features/user.js'
+import store from './store.js'
 import { CookiesProvider } from 'react-cookie'
+import { PersistGate } from 'redux-persist/integration/react'
+import persistStore from 'redux-persist/es/persistStore'
 
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-  }
-})
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+// const store = configureStore({
+//   reducer: {
+//     user: userReducer,
+//   }
+// })
+
+const container = document.getElementById("root");
+const root = createRoot(container);
+let persistor = persistStore(store)
+
+root.render(
 
   <React.StrictMode>
     <Provider store={store}>
-      <CookiesProvider>
-        <App />
-      </CookiesProvider>
+      <PersistGate persistor={persistor}>
+
+        <CookiesProvider>
+          <App />
+        </CookiesProvider>
+      </PersistGate>
     </Provider>
-
-
   </React.StrictMode>
-
 )

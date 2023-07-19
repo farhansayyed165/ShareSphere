@@ -17,6 +17,7 @@ const validateToken = asyncHandler(async (req, res, next)=>{
             }
             
             req.user = decoded.user
+            req.goodUser = true
             console.log(req.user)
             next();  
         })

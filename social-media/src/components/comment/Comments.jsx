@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { getComment } from '../api/commentApi';
+import { getComment } from '../../api/commentApi';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

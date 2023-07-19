@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { createUser, loginUser } from '../api/userApi'; 
-import Cookies from 'universal-cookie';
+import { useLocation,useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {Auth} from '../features/userSlice'
+import { useCookies } from 'react-cookie';
 
 
 
 const CreateUser = () => {
-    const cookies = new Cookies();
+    const navigate = useNavigate()
+    const [cookies, setCookies] = useCookies(['access-token', 'refresh-token'])
     const [userDetail, setUserDetail] = useState({fullname:"", username:"",password:"", confirmPassword:"",email:"",gender:""})
-    console.log(cookies.get('b-token')); 
+    const redirectToPreviousPage = useLocation().state?.redirectLink ? useLocation().state.redirectLink:"/";
+    const dispatch = useDispatch();
     
     function handleSubmit(e){
         e.preventDefault();
@@ -20,14 +25,15 @@ const CreateUser = () => {
         if(userDetail.password != userDetail.confirmPassword){
             return console.log("password sahi kar")
         }
-        console.log(userDetail)
         createUser(userDetail)
         .then(res =>{
             const loginData = {email:res.user.email, password:res.user.password}
             loginUser(loginData)
             .then(res=>{
-                cookies.set('b-token', res, { path: '/' , sameSite:"none"});
-                console.log(cookies.get('b-token')); 
+                setCookies('access-token',res.accessToken, {path:'/',sameSite:"strict"})
+                const {fullname, email, password, avatar, gender, username, _id} = res.user
+                dispatch(Auth({fullname, email, password, avatar, username,_id, login:true}))
+                navigate(redirectToPreviousPage)
             })
         })
     }
