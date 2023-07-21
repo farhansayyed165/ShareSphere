@@ -4,6 +4,7 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {Auth} from '../features/userSlice'
 import { useCookies } from 'react-cookie';
+import { credentialsLogin } from '../utils/loginUser';
 
 
 
@@ -28,13 +29,7 @@ const CreateUser = () => {
         createUser(userDetail)
         .then(res =>{
             const loginData = {email:res.user.email, password:res.user.password}
-            loginUser(loginData)
-            .then(res=>{
-                setCookies('access-token',res.accessToken, {path:'/',sameSite:"strict"})
-                const {fullname, email, password, avatar, gender, username, _id} = res.user
-                dispatch(Auth({fullname, email, password, avatar, username,_id, login:true}))
-                navigate(redirectToPreviousPage)
-            })
+            credentialsLogin(loginData,setCookies,dispatch,Auth,navigate,redirectToPreviousPage);
         })
     }
 

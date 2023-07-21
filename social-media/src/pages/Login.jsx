@@ -1,36 +1,34 @@
 import { React, useState } from "react"
-import { loginUser as loginUserDetails } from "../api/userApi"
 import {useCookies} from 'react-cookie'
 import { useSelector, useDispatch } from 'react-redux';
 import { Auth } from '../features/userSlice';
-import { redirect, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+// import { credentialsLogin } from "../utils/loginUser";
+import { loginUser } from "../api/userApi";
 
 
 
 export default function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const user = useSelector((state)=>state.user.user)
-    const [cookies, setCookies] = useCookies(['access-token', 'refresh-token'])
+    const [cookies, setCookies] = useCookies(['access-token'])
     const [loginData, setLoginData] = useState({ email: "", password: "" });
     const [message, setMessage] = useState(useLocation().state?.message)
     const redirectToPreviousPage = useLocation().state?.redirectLink ? useLocation().state.redirectLink:"/"
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault()
         try{
-            const response = await loginUserDetails(loginData, cookies['access-token'])
-            setCookies('access-token',response.accessToken, {path:'/',sameSite:"strict"})
-
-            const {fullname, email, password, avatar, gender, username, _id} = response.user
-
-            dispatch(Auth({fullname, email, password, avatar, username,_id, login:true}))
-            navigate(redirectToPreviousPage)
-
+            loginUser(loginData)
+            .then(res=>{
+                setCookies('access-token',res.accessToken, {path:'/',maxAge:864000})
+                const {fullname, email, password, avatar, gender, username, _id} = res.user
+                dispatch(Auth({fullname, email, password, avatar, username,_id, login:true}))
+                navigate(redirectToPreviousPage)
+            })
         }catch(err){
             console.log(err)
         }
-        
     }
     function handleChange(e) {
         const { name, value } = e.target;

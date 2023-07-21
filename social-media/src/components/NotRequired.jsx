@@ -7,8 +7,13 @@ function WillNotLoadIfLoggedIn() {
     const user = useSelector((state)=>{
         const data = state.user.user ? state.user.user : null
         return data
-    })
-    if(user.login){
+    });
+    if(user == null){
+        return (
+            <Outlet/>
+          )
+    }
+    if(user.login == true){
         return <Navigate to={"/"} state={{message:"already logged in"}}/>
     }
     else{

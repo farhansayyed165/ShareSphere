@@ -15,7 +15,7 @@ export async function createUser(data) {
 
 }
 
-export async function loginUser(data, token) {
+export async function loginUser(data) {
     const response = await fetch('http://localhost:5000/api/users/login', {
         method: "POST", 
         mode: "cors",
@@ -23,7 +23,6 @@ export async function loginUser(data, token) {
         credentials: "same-origin", 
         headers: {
         "Content-Type": "application/json",
-        'authorization':`Bearer ${token}`
         },
         redirect: "follow", 
         referrerPolicy: "no-referrer", 
@@ -33,11 +32,9 @@ export async function loginUser(data, token) {
 
 }
 
-export async function getUser(token, username){
+export async function getUser( username){
     const response = await fetch(
-        `http://localhost:5000/api/users/profile/${username}`,
-        {headers:{'Authorization':`Bearer ${token}`}}
-        )
+        `http://localhost:5000/api/users/profile/${username}`)
 
     return response.json(); 
 }
@@ -71,6 +68,15 @@ export async function deleteUser(data, token){
         redirect: "follow", 
         referrerPolicy: "no-referrer", 
         body: JSON.stringify(data), 
+    });
+    return response.json(); 
+};
+
+export async function followHandler( toFollowId, token){
+    const response = await fetch(`http://localhost:5000/api/users/follow/${toFollowId}`, {
+        headers: {
+        Authorization: `Bearer ${token}`
+        }
     });
     return response.json(); 
 }

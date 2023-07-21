@@ -119,4 +119,57 @@ const deleteUser = asyncHandler(async (req,res)=>{
     res.json(user).status(200);
 });
 
-module.exports = {createUser, loginUser, viewProfile,viewProfileUsername,updateUser, deleteUser}
+const followUserHandler = asyncHandler(async (req, res)=>{
+    const userId = req.user._id;
+    const toFollowId = req.params.toFollowId
+
+    const user = await User.findById(userId);
+    const toFollowUser = await User.findById(toFollowId)
+    if(!user || !toFollowUser){
+        res.status(404)
+        throw new Error("User data is not valid")
+    }
+
+    let signedUserFollowingArray = user.following;
+
+    let toFollowUserFollowersArray = toFollowUser.followers;
+
+    console.log(toFollowUserFollowersArray.length)
+    console.log(typeof signedUserFollowingArray)
+    const array = [1,2,3,4,5];
+    console.log(array.indexOf(2))
+    if(signedUserFollowingArray.includes(toFollowId) && toFollowUserFollowersArray.includes(userId)){
+        console.log("in exception")
+        signedUserFollowingArray.splice(signedUserFollowingArray.indexOf(toFollowId),1)
+        console.log("after signed user")
+        toFollowUserFollowersArray.splice(toFollowUserFollowersArray.indexOf(userId),1);
+
+    }
+    else{
+        signedUserFollowingArray.push(toFollowId)
+
+        toFollowUserFollowersArray.push(userId)
+    }
+    // else{
+    //     res.status(500);
+    //     throw new Error("The condition for following arrays not satified. This is a database inconsistency issue")
+    // }
+
+    const updatedToFollowUser = await User.findByIdAndUpdate(
+        toFollowId,
+        {followers:toFollowUserFollowersArray},
+        { new: true }
+    );
+
+    const updatedSignedUser = await User.findByIdAndUpdate(
+        userId,
+        {following:signedUserFollowingArray},
+        { new: true }
+    );
+    res.status(200).json({updateUser:updatedSignedUser, updatedViewingUser:updatedToFollowUser})
+})
+
+const checkIfAllIsOK = asyncHandler(async (req, res)=>{
+    res.json({message:"All OK"}).status(200)
+})
+module.exports = {createUser, loginUser, viewProfile,viewProfileUsername,updateUser, deleteUser, followUserHandler,checkIfAllIsOK}

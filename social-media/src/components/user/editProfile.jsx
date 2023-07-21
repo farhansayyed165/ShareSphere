@@ -16,7 +16,6 @@ function EditProfile({ showEdit, data, token, setOff }) {
         }
     }
     const [userDetail, setUserDetail] = useState(data);
-    console.log(data.fullname)
     
     const handleChange = (e) => {
         const { name, value } = e.target;

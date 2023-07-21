@@ -9,8 +9,9 @@ import Submit from './pages/Submit'
 import Post from './pages/Post'
 import Auth from './components/Auth'
 import WillNotLoadIfLoggedIn from './components/NotRequired'
+import UsernameError from './components/error/UsernameError'
+import { loader as profileLoader } from './pages/Profile'
 
-// import { loader as profileLoader } from './pages/Profile'
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Layout />}>
@@ -22,7 +23,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     </Route>
 
 
-    <Route path=':username' element={<Profile />}></Route>
+    <Route path=':username' element={<Profile />} errorElement={<UsernameError/>} loader={profileLoader}></Route>
     <Route element={<Auth />} >
       <Route path='submit' element={<Submit />} />
     </Route>
@@ -30,6 +31,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='posts'>
       <Route path=':postId' element={<Post />} />
     </Route>
+    <Route path='/logout' element></Route>
   </Route>
 ))
 
