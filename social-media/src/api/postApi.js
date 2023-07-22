@@ -36,15 +36,29 @@ export async function submitPost(data, token) {
 
 }
 
-export async function getPost(postId,token){
+export async function getPost(postId){
     try {
         const response = await fetch(
-            `http://localhost:5000/api/posts/getPost/${postId}`,
-            {headers:{
-            'content-type': 'application/json',
-            authorization: `Bearer ${token}`,}}
-            )
+            `http://localhost:5000/api/posts/getPost/${postId}`)
     
+        return response.json(); 
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function SavePost(postId, token){
+    const url = `http://localhost:5000/api/posts/save/${postId}`
+    // const url = `http://localhost:5000/api/`
+    try {
+        const response = await fetch(
+            url,{
+                method:"PUT",
+                headers: {
+                    'content-type': 'application/json',
+                    authorization: `Bearer ${token}`,
+                },
+            })
         return response.json(); 
     } catch (err) {
         console.log(err);

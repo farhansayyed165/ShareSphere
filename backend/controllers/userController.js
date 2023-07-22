@@ -150,10 +150,6 @@ const followUserHandler = asyncHandler(async (req, res)=>{
 
         toFollowUserFollowersArray.push(userId)
     }
-    // else{
-    //     res.status(500);
-    //     throw new Error("The condition for following arrays not satified. This is a database inconsistency issue")
-    // }
 
     const updatedToFollowUser = await User.findByIdAndUpdate(
         toFollowId,
@@ -172,4 +168,7 @@ const followUserHandler = asyncHandler(async (req, res)=>{
 const checkIfAllIsOK = asyncHandler(async (req, res)=>{
     res.json({message:"All OK"}).status(200)
 })
+
+
+
 module.exports = {createUser, loginUser, viewProfile,viewProfileUsername,updateUser, deleteUser, followUserHandler,checkIfAllIsOK}

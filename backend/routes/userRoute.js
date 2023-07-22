@@ -7,9 +7,9 @@ router.post("/signup", createUser);
 
 router.post("/login", loginUser);
 
-router.get("/check/:id", validateToken, checkIfAllIsOK)
-
 router.get("/profile/:username", viewProfileUsername);
+
+router.get("/check/:id", validateToken, checkIfAllIsOK);
 
 router.put("/update/" , validateToken, updateUser);
 

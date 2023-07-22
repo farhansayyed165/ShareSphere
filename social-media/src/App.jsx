@@ -5,12 +5,12 @@ import Layout from './components/Layout.jsx'
 import Login from './pages/Login.jsx'
 import CreateUser from './pages/CreateUser'
 import Profile from './pages/Profile'
+import { loader as profileLoader } from './pages/Profile'
 import Submit from './pages/Submit'
-import Post from './pages/Post'
+import Post, {loader as PostLoader} from './pages/Post'
 import Auth from './components/Auth'
 import WillNotLoadIfLoggedIn from './components/NotRequired'
 import UsernameError from './components/error/UsernameError'
-import { loader as profileLoader } from './pages/Profile'
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -29,7 +29,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     </Route>
 
     <Route path='posts'>
-      <Route path=':postId' element={<Post />} />
+      <Route path=':postId' element={<Post />} loader={PostLoader}/>
     </Route>
     <Route path='/logout' element></Route>
   </Route>

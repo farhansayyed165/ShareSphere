@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Post = require("../model/postsModel");
 const Comment = require('../model/commentModel')
+const User = require("../model/userModel")
 // const {cloudinary} = require("../utils/cloudinary")
 
 const getPosts = asyncHandler(async (req, res) => {
@@ -139,4 +140,28 @@ const addComment = asyncHandler(async (req, res) => {
     res.status(201).json({ message: "Comment Created successfully!", comment })
 })
 
-module.exports = { getPosts, getPost, getPostsUser, createPost, deletePost, updatePost, likePost,addComment }
+const savePost = asyncHandler(async (req, res)=>{
+    const {postId} = req.params;
+    const userId = req.user._id
+    const user = await User.findById(userId);
+    if(!user || !postId){
+        res.status(404)
+        throw new Error("Can't find post or user")
+    }
+    const saveArray = user.saved
+    if(saveArray.includes(postId)){
+        saveArray.splice(saveArray.indexOf(postId),1)
+    }
+    else{
+        saveArray.push(postId)
+    }
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {saved:saveArray},
+        {new:true}
+        )
+    res.json({updatedUser}).status(200)
+    
+})
+
+module.exports = { getPosts, getPost, getPostsUser, createPost, deletePost, updatePost, likePost,addComment, savePost }

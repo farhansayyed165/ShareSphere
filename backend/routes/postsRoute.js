@@ -1,5 +1,5 @@
 const express = require("express");
-const {getPosts,getPost,getPostsUser, createPost, deletePost, updatePost, likePost, addComment}= require("../controllers/postsController");
+const {getPosts,getPost,getPostsUser, createPost, deletePost, updatePost, likePost, addComment, savePost}= require("../controllers/postsController");
 const router = express.Router();
 const validateToken = require("../middleware/validateToken");
 
@@ -13,6 +13,8 @@ router.post("/", validateToken,createPost);// api/posts/
 router.put("/updatePost/:id",validateToken, updatePost);
 
 router.put("/createComment/",validateToken, addComment);
+
+router.put("/save/:postId", validateToken, savePost)
 
 router.put("/likePost/:id", likePost);
 

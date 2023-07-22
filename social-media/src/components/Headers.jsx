@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { UnAuth } from "../features/userSlice";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { checkToken } from "../utils/checkToken";
+
 
 export default function Headers() {
+    const path = useLocation().pathname
+
     const [cookies, setCookies, removeCookie] = useCookies(['access-token'])
     const token = (cookies['access-token']) ? cookies['access-token'] : undefined;
     const [isValidToken, setIsValidToken] = useState(false)
@@ -19,15 +21,15 @@ export default function Headers() {
     })
     const dispatch = useDispatch()
     function handleLogout(e) {
-        dispatch(UnAuth())
+        dispatch(UnAuth({login:false}))
         removeCookie('access-token', { path: '/' });
         window.location.reload()
     }
 
     const notLoggedInNavElements = (
         <>
-            <Link to={"/login"}>Login</Link>
-            <Link to={"/signup"}>Signup</Link>
+            <Link to={"/login"} state={{redirectLink:path}}>Login</Link>
+            <Link to={"/signup"} state={{redirectLink:path}}>Signup</Link>
         </>
     )
     const loggedInNavElements = (
