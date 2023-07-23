@@ -5,24 +5,28 @@ import { useLoaderData } from 'react-router-dom';
 import EditProfile from '../components/user/editProfile';
 import { useSelector } from 'react-redux';
 import FollowComponent from '../components/user/Follow';
+import ProfilePosts from '../components/posts/ProfilePosts';
+import { getUserPosts } from '../api/postApi';
 
 export async function loader({ params }) {
     const { username } = params
     const res = await getUser(username)
-    return res
+    const id = res._id
+    // const posts = await getUserPosts(id)
+    return {user:res}
 }
 
 const Profile = () => {
     const [cookies, setCookies] = useCookies(['access-token', 'refresh-token'])
     const token = cookies['access-token']
-    const [data, setData] = useState(useLoaderData())
+    const [data, setData] = useState(useLoaderData().user)
     const [edit, setEdit] = useState(false)
     const toFollowId = data._id;
     const user = useSelector((state) => {
         const value = state.user.user ? state.user.user : state.user
         return value
     })
-
+    console.log(useLoaderData)
     const editProfileComponent = (
         <>
             <EditProfile token={token} data={data} showEdit={edit} setOff={setEdit} />
@@ -30,7 +34,7 @@ const Profile = () => {
         </>
     )
 
-    const FollowComponentRender = <FollowComponent toFollowId={toFollowId} token={token} user={user} setData={setData}/>
+    const FollowComponentRender = user?.login ?  <FollowComponent toFollowId={toFollowId} token={token} user={user} setData={setData}/>:<></>
     const renderEdit = (data.username == user?.username) ? editProfileComponent : FollowComponentRender
     function handleEdit(e) {
         setEdit(!edit)
@@ -52,6 +56,7 @@ const Profile = () => {
             <br />
             <h1>email: {data.email}</h1>
             <br />
+            <ProfilePosts user={data}></ProfilePosts>
         </div>
     );
 }

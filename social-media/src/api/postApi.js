@@ -1,25 +1,10 @@
-// export async function createPost(data, token){
-//     // console.log(token)
-//     const response = await fetch('http://localhost:5000/api/posts/', {
-//         method: "POST", 
-//         mode: "cors",
-//         cache: "no-cache",
-//         credentials: "same-origin", 
-//         headers: {
-//         "Content-Type": "application/json",
-//         'authorization':`Bearer ${token}`
-//         },
-//         redirect: "follow", 
-//         referrerPolicy: "no-referrer", 
-//         body: JSON.stringify(data), 
-//     });
-
-//     return response.json();
-
-// }
+export async function getUserPosts(id){
+    const response = await fetch(`/api/posts/getUserPosts/${id}`)
+    return response.json()
+}
 
 export async function submitPost(data, token) {
-    const response = await fetch('http://localhost:5000/api/posts', {
+    const response = await fetch('/api/posts', {
         method: "POST", 
         mode: "cors",
         cache: "no-cache",

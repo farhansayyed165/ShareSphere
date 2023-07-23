@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route, Link, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom"
 import Layout from './components/Layout.jsx'
+import Home from './pages/Home'
 import Login from './pages/Login.jsx'
 import CreateUser from './pages/CreateUser'
 import Profile from './pages/Profile'
@@ -15,7 +16,7 @@ import UsernameError from './components/error/UsernameError'
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Layout />}>
-    <Route index element={<h1>Hello world</h1>} />
+    <Route index element={<Home/>} />
 
     <Route element={<WillNotLoadIfLoggedIn />}>
       <Route path="login" element={<Login />} />

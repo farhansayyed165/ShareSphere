@@ -1,4 +1,4 @@
-import { React, useState } from "react"
+import { React, useState,useEffect } from "react"
 import { useCookies } from 'react-cookie'
 import { useSelector, useDispatch } from 'react-redux';
 import { Auth } from '../features/userSlice';
@@ -8,24 +8,27 @@ import { loginUser } from "../api/userApi";
 
 
 export default function Login() {
+    // let redirectToPreviousPage 
     const [navigateto, setNavigateTo] = useOutletContext()
-    const redirectToPreviousPage = useLocation().state?.redirectLink ? useLocation().state.redirectLink:"/"
-    setNavigateTo(redirectToPreviousPage)
+
+    const   redirectToPreviousPage = useLocation().state?.redirectLink ? useLocation().state.redirectLink:"/"
+
     const dispatch = useDispatch()
     const [cookies, setCookies] = useCookies(['access-token'])
     const [loginData, setLoginData] = useState({ email: "", password: "" });
     const [message, setMessage] = useState(useLocation().state?.message)
-
+    
     function handleSubmit(e) {
         e.preventDefault()
+        setNavigateTo(redirectToPreviousPage)
         loginUser(loginData)
             .then(res => {
                 setCookies('access-token', res.accessToken, { path: '/', maxAge: 864000 })
                 const { fullname, email, password, avatar, gender, username, _id, following, followers, saved } = res.user;
                 dispatch(Auth({ fullname, email, password, avatar, username, _id, followers, following, saved, login: true }));
             })
-
-    }
+            
+        }
     function handleChange(e) {
         const { name, value } = e.target;
         setLoginData(prev => ({
