@@ -166,7 +166,7 @@ const followUserHandler = asyncHandler(async (req, res)=>{
 })
 
 const checkIfAllIsOK = asyncHandler(async (req, res)=>{
-    res.json({message:"All OK"}).status(200)
+    res.send("all ok")
 })
 
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createUser, loginUser } from '../api/userApi'; 
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation,useNavigate, useOutletContext } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {Auth} from '../features/userSlice'
 import { useCookies } from 'react-cookie';
@@ -9,6 +9,7 @@ import { credentialsLogin } from '../utils/loginUser';
 
 
 const CreateUser = () => {
+    const [navigateTo, setNavigateTo] = useOutletContext()
     const navigate = useNavigate()
     const [cookies, setCookies] = useCookies(['access-token', 'refresh-token'])
     const [userDetail, setUserDetail] = useState({fullname:"", username:"",password:"", confirmPassword:"",email:"",gender:""})
@@ -26,6 +27,7 @@ const CreateUser = () => {
         if(userDetail.password != userDetail.confirmPassword){
             return console.log("password sahi kar")
         }
+        setNavigateTo(redirectToPreviousPage)
         createUser(userDetail)
         .then(res =>{
             const loginData = {email:res.user.email, password:res.user.password}

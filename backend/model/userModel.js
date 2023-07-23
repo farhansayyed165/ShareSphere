@@ -50,6 +50,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref:"user"
     }],
+    posts:[{
+        type:mongoose.Types.ObjectId,
+        ref:"post"
+    }]
 },
 {
     timestamps:true,

@@ -3,18 +3,18 @@ const router = express.Router();
 const {createUser, loginUser, updateUser, deleteUser, viewProfileUsername, followUserHandler, checkIfAllIsOK} = require("../controllers/userController")
 const validateToken = require("../middleware/validateToken");
 
-router.post("/signup", createUser);
+router.post("/signup", createUser); //POST
 
-router.post("/login", loginUser);
+router.post("/login", loginUser); //POST
 
-router.get("/profile/:username", viewProfileUsername);
+router.get("/profile/:username", viewProfileUsername); //GET
 
-router.get("/check/:id", validateToken, checkIfAllIsOK);
+router.get("/check/:id", checkIfAllIsOK); //GET
 
-router.put("/update/" , validateToken, updateUser);
+router.put("/update/" , validateToken, updateUser); // PUT
 
-router.get("/follow/:toFollowId", validateToken, followUserHandler)
+router.get("/follow/:toFollowId", validateToken, followUserHandler) //GET
 
-router.delete("/delete", validateToken, deleteUser)
+router.delete("/delete", validateToken, deleteUser) // DELETE
 
 module.exports = router

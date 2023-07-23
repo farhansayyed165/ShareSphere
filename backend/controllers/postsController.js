@@ -28,13 +28,15 @@ const getPost = asyncHandler(async (req, res) => {
 
 
 
-const getPostsUser = asyncHandler(async (req, res) => {
-    if (!req.id) {
+const getUserPosts = asyncHandler(async (req, res) => {
+    if (!req.params.id) {
         res.status(404)
         throw new Error("Can't find any Post")
     }
-    const id = req.id;
-    const posts = await Post.find({ id });
+    const id = req.params.id
+    const user = await User.findById(id);
+    // console.log(user)
+    const posts = user.posts
     res.status(200).json(posts)
 });
 
@@ -47,6 +49,7 @@ const createPost = asyncHandler(async (req, res) => {
         throw new Error("invalid request. All fields required");
     }
     const userId = req.user._id;
+    const user = await User.findById(userId)
     const images = req.body.images ? req.body.images : [];
 
     const date = new Date().toISOString();
@@ -54,6 +57,9 @@ const createPost = asyncHandler(async (req, res) => {
     const post = await Post.create({
         title, content, images, addedDate: date, userId
     });
+    const posts = user.posts
+    posts.push(post._id)
+    await User.findByIdAndUpdate(userId,{posts:posts},{new:true})
     res.status(200).json(post);
     console.log("Post ", post)
 
@@ -164,4 +170,4 @@ const savePost = asyncHandler(async (req, res)=>{
     
 })
 
-module.exports = { getPosts, getPost, getPostsUser, createPost, deletePost, updatePost, likePost,addComment, savePost }
+module.exports = { getPosts, getPost, getUserPosts, createPost, deletePost, updatePost, likePost,addComment, savePost }

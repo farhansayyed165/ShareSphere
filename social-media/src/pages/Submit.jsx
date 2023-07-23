@@ -30,6 +30,7 @@ const Submit = () => {
     }
     
     function handleSubmit(e) {
+        
         e.preventDefault();
         setFormData(prev => ({
             ...prev,
@@ -51,10 +52,9 @@ const Submit = () => {
                 setImages(prev=>{
                     return [...prev, res.data.secure_url]
                 })
+                console.log(images)
             })
-        });
-        console.log(images)
-        console.log("done")
+        })
     }
 
     return (
