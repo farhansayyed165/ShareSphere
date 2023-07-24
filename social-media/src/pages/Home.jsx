@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { getPosts } from '../api/postApi';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import SmallPost from '../components/posts/SmallPost';
 
@@ -10,9 +10,9 @@ export function loader({}){
 
 function Home() {
   const [posts, setPosts] = useState(useLoaderData())
+  const navigate = useNavigate()
     function sendRequest(){
-        getPosts()
-        .then(res=>console.log(res))
+      navigate("/submit")
     }
     const renderPosts = posts.map(post=>{
       const id = nanoid()
@@ -21,7 +21,7 @@ function Home() {
   return (
     <>
     <div>Home</div>
-    <button onClick={sendRequest}>send request</button>
+    <button onClick={sendRequest}>+</button>
     {renderPosts}
     </>
   )
