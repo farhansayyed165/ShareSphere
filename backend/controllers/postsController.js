@@ -170,4 +170,8 @@ const savePost = asyncHandler(async (req, res)=>{
     
 })
 
-module.exports = { getPosts, getPost, getUserPosts, createPost, deletePost, updatePost, likePost,addComment, savePost }
+const paginatedPosts = asyncHandler(async(req,res)=>{
+    res.json(res.paginatedResults).status(200)
+})
+
+module.exports = { getPosts, getPost, getUserPosts, createPost, deletePost, updatePost, likePost,addComment, savePost,paginatedPosts }
