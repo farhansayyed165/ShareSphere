@@ -23,7 +23,6 @@ const Profile = () => {
     const [edit, setEdit] = useState(false)
     const toFollowId = data._id;
  
-    // console.log(posts.length)
     const user = useSelector((state) => {
         const value = state.user.user ? state.user.user : state.user
         return value

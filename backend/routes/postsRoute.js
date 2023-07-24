@@ -7,7 +7,9 @@ const validateToken = require("../middleware/validateToken");
 
 router.get("/getPost/:id", getPost); // api/posts/             //GET
 
-router.get("/getUserPosts/:id", getUserPosts); // api/posts/    //GET
+router.get("/getAll", getPosts); // api/posts/                  //GET
+
+router.get("/getUserPosts/:id", getUserPosts); // api/posts/   //GET
 
 router.post("/", validateToken,createPost);// api/posts/       //POST
 // title, content, images, 
@@ -18,7 +20,7 @@ router.put("/createComment/",validateToken, addComment);       //PUT
 
 router.put("/save/:postId", validateToken, savePost)           //PUT
 
-router.put("/likePost/:id", likePost);                         //PUT
+router.put("/likePost/:id",validateToken, likePost);           //PUT
 
 router.delete("/:id", deletePost);// api/posts/                //DELETE
 

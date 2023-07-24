@@ -27,12 +27,7 @@ const CreateComment = ({ postId, setPostData }) => {
                     alert(res.message)
 
                     setCommentData(prev=>({...prev,content:""}))
-                    setPostData(prev =>{
-                        return {
-                            ...prev,
-                            render:!prev.render
-                        }
-                     })
+                    window.location.reload()
                 })
         }
         return (

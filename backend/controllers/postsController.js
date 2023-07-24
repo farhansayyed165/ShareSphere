@@ -2,15 +2,14 @@ const asyncHandler = require("express-async-handler");
 const Post = require("../model/postsModel");
 const Comment = require('../model/commentModel')
 const User = require("../model/userModel")
-// const {cloudinary} = require("../utils/cloudinary")
 
 const getPosts = asyncHandler(async (req, res) => {
-    const posts = await Post.find();
+    const posts = await Post.find().sort({likes:-1});
     if (posts) {
         res.status(200).json(posts)
     }
     else {
-        res.status(404)
+        res.status(404).json({error:"Can't find any posts"})
         throw new Error("Can't find any Posts")
     }
 });
@@ -95,12 +94,13 @@ const likePost = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error("Bad Request, can't find any comment with the give ID")
     }
+    console.log(req.params.id)
     const post = await Post.findById(req.params.id);
     if (!post) {
         res.status(404)
         throw new Error("comment not found")
     }
-    const user = req.user.id;
+    const user = req.user._id;
     console.log(user)
     const likesArray = post.likes;
     if (likesArray.includes(user)) {
@@ -115,7 +115,7 @@ const likePost = asyncHandler(async (req, res) => {
         { likes: likesArray },
         { new: true }
     );
-    res.status(200).json({ likes: likesArray.length, post: updatedPost })
+    res.status(200).json({ likes: likesArray, post: updatedPost })
 });
 
 const addComment = asyncHandler(async (req, res) => {

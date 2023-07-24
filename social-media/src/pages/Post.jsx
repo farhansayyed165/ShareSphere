@@ -8,12 +8,13 @@ import Comments from '../components/comment/Comments';
 import Save from '../components/posts/Save';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import LikeButton from '../components/posts/LikeButton';
 
 export async function loader({ params }) {
     const { postId } = params;
     const response = await getPost(postId)
-    const { title, content, images, updatedAt, likes, comments } = response
-    return { title, content, images, updatedAt, likes, comments }
+    // const { title, content, images, updatedAt, likes, comments } = response
+    return response
 }
 
 
@@ -22,6 +23,7 @@ const Post = () => {
     const postId = useParams().postId
     const data = useLoaderData()
     const [postData, setPostData] = useState({ ...data, render: 0 })
+    // console.log(postData)
 
     const [cookies] = useCookies(['access-token'])
     const token = cookies['access-token']
@@ -62,7 +64,8 @@ const Post = () => {
                 {
                     postImages
                 }
-                <span>  likes:{postData.likes.length}</span>
+                {/* <span>  likes:{}</span> */}
+                <LikeButton login={user.login} postId={postData._id} token={token} postData={postData} setPostData={setPostData}></LikeButton>
                 <br />
                 {loginRequiredComponent}
             </div>

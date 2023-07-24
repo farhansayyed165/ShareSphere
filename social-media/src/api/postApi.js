@@ -24,7 +24,7 @@ export async function submitPost(data, token) {
 export async function getPost(postId){
     try {
         const response = await fetch(
-            `http://localhost:5000/api/posts/getPost/${postId}`)
+            `/api/posts/getPost/${postId}`)
     
         return response.json(); 
     } catch (err) {
@@ -33,8 +33,7 @@ export async function getPost(postId){
 }
 
 export async function SavePost(postId, token){
-    const url = `http://localhost:5000/api/posts/save/${postId}`
-    // const url = `http://localhost:5000/api/`
+    const url = `/api/posts/save/${postId}`
     try {
         const response = await fetch(
             url,{
@@ -49,3 +48,27 @@ export async function SavePost(postId, token){
         console.log(err);
     }
 }
+
+
+export async function getPosts(){
+    try{const response = await fetch("/api/posts/getAll")
+    return response.json()}
+    catch(err){return new Error(err)}
+}
+
+export async function likePost(id,token){
+    try{
+        const response = await fetch(`/api/posts/likePost/${id}`,{
+            method:"PUT",
+            headers:{
+                'content-type':'application/json',
+                authorization:`Bearer ${token}`
+            }
+        })
+        return response.json()
+    }
+    catch(err){
+        console.log(err)
+        return new Error(err)
+    }
+} 

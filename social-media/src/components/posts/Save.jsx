@@ -21,7 +21,7 @@ function Save({postId, setPostData, user, token}) {
           })
         })
     }
-    const saveButtonText = user.saved.includes(postId) ? "Remove from saved":"Save"
+    const saveButtonText = user.saved?.includes(postId) ? "Remove from saved":"Save"
   return (
     <button onClick={handleSave}>{saveButtonText}</button>
   )

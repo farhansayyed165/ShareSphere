@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { nanoid } from '@reduxjs/toolkit';
 import { getUserPosts, getPost } from '../../api/postApi';
+import SmallPost from './SmallPost';
 
 
 function ProfilePosts({  data }) {
@@ -24,15 +25,9 @@ function ProfilePosts({  data }) {
     })})
   },[])
   const renderPosts = posts.map(post => {
-    let content = post.content.substring(0, 20);
     let id = nanoid()
     return (
-      <div key={id}>
-        <h1>{post.title}</h1>
-        <h4>{content}</h4>
-        <p>likes: {post.likes}</p>
-        <img src={post.images[0]} alt="" style={{ maxWidth: "120px", maxHeight: "200px" }} />
-      </div>
+      <SmallPost key={id} data={post}></SmallPost>
     )
   })
   console.log(renderPosts)

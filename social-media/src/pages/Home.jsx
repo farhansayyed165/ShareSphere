@@ -1,21 +1,28 @@
-import React from 'react'
-import { getUser } from '../api/userApi';
+import React, {useState} from 'react'
+import { getPosts } from '../api/postApi';
+import { useLoaderData } from 'react-router-dom';
+import { nanoid } from 'nanoid';
+import SmallPost from '../components/posts/SmallPost';
 
-// async function req(username){
-//     const response = await fetch(
-//         `http://localhost:5000/api/users/profile/${username}`)
-//     return response.json(); 
-// }
+export function loader({}){
+  return getPosts()
+}
 
 function Home() {
+  const [posts, setPosts] = useState(useLoaderData())
     function sendRequest(){
-        getUser("farhan165")
+        getPosts()
         .then(res=>console.log(res))
     }
+    const renderPosts = posts.map(post=>{
+      const id = nanoid()
+      return <SmallPost data={post} key={id}/>
+    })
   return (
     <>
     <div>Home</div>
     <button onClick={sendRequest}>send request</button>
+    {renderPosts}
     </>
   )
 }
