@@ -24,9 +24,7 @@ function Home() {
   function fetchMore(){
     getPosts(next?.page)
     .then(res=>{
-      // console.log(res)
       const results = res.results
-      console.log("results",results)
       const next = res?.next
       setPosts(prev=>{
         const newArray = prev.concat(results);
