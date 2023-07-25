@@ -10,7 +10,7 @@ const postsSchema = mongoose.Schema({
     content:{
         type:String,
         required:[true, "Please add a body to the post"],
-        maxlength:500,
+        maxlength:5000,
     },
     images:{
         type:Array,

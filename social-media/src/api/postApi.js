@@ -50,8 +50,12 @@ export async function SavePost(postId, token){
 }
 
 
-export async function getPosts(){
-    try{const response = await fetch("/api/posts/getAll")
+export async function getPosts(p){
+
+    const page = p ? p : 1
+    console.log(page)
+    const limit = 10
+    try{const response = await fetch(`/api/posts/getPaginatedPosts?page=${page}&limit=${limit}`)
     return response.json()}
     catch(err){return new Error(err)}
 }

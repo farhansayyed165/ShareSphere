@@ -3,6 +3,7 @@ const Post = require("../model/postsModel")
 async function paginateModel(req, res, next){
         const limit = parseInt(req.query.limit)
         const page = parseInt(req.query.page)
+        console.log(page)
         const startIndex = (page-1) * limit
         const endIndex = page * limit
         const results = {}

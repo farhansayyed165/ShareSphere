@@ -18,6 +18,8 @@ const Submit = () => {
         images: [],
     });
 
+    console.log(images)
+
 
 
     function handleChange(e) {
@@ -52,7 +54,7 @@ const Submit = () => {
                 setImages(prev=>{
                     return [...prev, res.data.secure_url]
                 })
-                console.log(images)
+                
             })
         })
     }
