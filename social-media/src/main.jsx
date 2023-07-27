@@ -9,12 +9,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 import persistStore from 'redux-persist/es/persistStore'
 
 
-// const store = configureStore({
-//   reducer: {
-//     user: userReducer,
-//   }
-// })
-
 const container = document.getElementById("root");
 const root = createRoot(container);
 let persistor = persistStore(store)
@@ -22,13 +16,13 @@ let persistor = persistStore(store)
 root.render(
 
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
 
-        <CookiesProvider>
-          <App />
-        </CookiesProvider>
-      </PersistGate>
-    </Provider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <CookiesProvider>
+            <App />
+          </CookiesProvider>
+        </PersistGate>
+      </Provider>
   </React.StrictMode>
 )

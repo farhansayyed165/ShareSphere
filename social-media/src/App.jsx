@@ -15,7 +15,7 @@ import UsernameError from './components/error/UsernameError'
 
 
 const router = createBrowserRouter(createRoutesFromElements(
-  <Route path='/' element={<Layout />}>
+  <Route path='/' element={<Layout />} >
     <Route index element={<Home/>} loader={HomeLoader}/>
 
     <Route element={<WillNotLoadIfLoggedIn />}>
