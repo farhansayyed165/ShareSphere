@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { likePost } from '../../api/postApi'
-import { useNavigate, Navigate } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { useNavigate, Navigate,useLocation } from 'react-router-dom'
+import {AiFillLike, AiOutlineLike} from 'react-icons/ai'
 
-function LikeButton({ login, postId, token, postData, setPostData }) {
+function LikeButton({ login, postId, token, postData, setPostData, user }) {
   const navigate = useNavigate()
   const path = useLocation().pathname
 
@@ -29,10 +29,11 @@ function LikeButton({ login, postId, token, postData, setPostData }) {
     }
 
   }
+  const likes = postData.likes.includes(user._id) ? true : false
 
   return (
     <>
-      <button onClick={like}>Like</button>
+      <button onClick={like}>{likes ? <AiFillLike/> : <AiOutlineLike/>}</button>
       <p>{postData.likes.length}</p>
     </>
   )

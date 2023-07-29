@@ -45,6 +45,8 @@ function Home() {
         <h1 className=''>Home</h1>
         
       </div> */}
+      <div className='max-w-xxl'>
+
       <InfiniteScroll
         dataLength={posts.length - 1}
         next={fetchMore}
@@ -56,9 +58,10 @@ function Home() {
             if (!post) {
               console.log("no post")
             }
-            return <SmallPost data={post} key={index} user={user}  token={token}/>
+            return <SmallPost data={post} key={index} user={user}  token={token} id={`Small-Post-${index}`}/>
           })}
       </InfiniteScroll>
+      </div>
     </div>
   )
 }

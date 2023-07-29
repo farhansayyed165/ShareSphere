@@ -65,7 +65,7 @@ const Post = () => {
                     postImages
                 }
                 {/* <span>  likes:{}</span> */}
-                <LikeButton login={user.login} postId={postData._id} token={token} postData={postData} setPostData={setPostData}></LikeButton>
+                <LikeButton login={user.login} postId={postData._id} token={token} postData={postData} setPostData={setPostData} user={user}></LikeButton>
                 <br />
                 {loginRequiredComponent}
             </div>

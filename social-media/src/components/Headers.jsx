@@ -1,4 +1,4 @@
-import { Link,useLocation, useNavigate } from "react-router-dom";
+import { Link,NavLink,useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { UnAuth } from "../features/userSlice";
@@ -31,21 +31,21 @@ export default function Headers() {
 
     const notLoggedInNavElements = (
         <>
-            <Link to={"/login"} state={{redirectLink:path}}>Login</Link>
-            <Link to={"/signup"} state={{redirectLink:path}}>Signup</Link>
+            <NavLink to={"/login"} state={{redirectLink:path}}>Login</NavLink>
+            <NavLink to={"/signup"} state={{redirectLink:path}}>Signup</NavLink>
         </>
     )
     const loggedInNavElements = (
         <>
             <span>{user.username}</span>
-            <button onClick={sendRequest} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"><Link to={"/submit"}>+</Link></button>
+            <button onClick={sendRequest} className="bg-blue-500 text-white transition-all duration-300 ease-in-out font-bold py-1 px-3 rounded flex items-center hover:px-4 text-lg "><Link to={"/submit"}>+</Link></button>
             <button onClick={handleLogout}>Logout</button>
         </>
     )
     return (
         <header >
             <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-                <Link className="site-logo" to={"/"}>Socu</Link>
+                <Link className="site-logo" to={"/"}><h1 className=" text-lg font-semibold hover:text-teal-700">Socu</h1></Link>
                 {
                     token ? loggedInNavElements : notLoggedInNavElements
                 }
