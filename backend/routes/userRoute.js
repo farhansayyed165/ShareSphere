@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {createUser, loginUser, updateUser, deleteUser, viewProfileUsername, followUserHandler, checkIfAllIsOK} = require("../controllers/userController")
+const {createUser, loginUser, updateUser, deleteUser, viewProfileUsername, followUserHandler, checkIfAllIsOK, viewProfileId} = require("../controllers/userController")
 const validateToken = require("../middleware/validateToken");
 
 router.post("/signup", createUser); //POST
@@ -8,6 +8,8 @@ router.post("/signup", createUser); //POST
 router.post("/login", loginUser); //POST
 
 router.get("/profile/:username", viewProfileUsername); //GET
+
+router.get("/profile/id/:id", viewProfileId); //GET
 
 router.get("/check/:id", checkIfAllIsOK); //GET
 

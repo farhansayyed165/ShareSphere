@@ -52,9 +52,14 @@ const createPost = asyncHandler(async (req, res) => {
     const images = req.body.images ? req.body.images : [];
 
     const date = new Date().toISOString();
-
+    const userObj = {
+        username: user.username,
+        fullname:user.fullname,
+        avatar:user.avatar,
+        id:user._id
+    }
     const post = await Post.create({
-        title, content, images, addedDate: date, userId
+        title, content, images, addedDate: date, user:userObj
     });
     const posts = user.posts
     posts.push(post._id)
@@ -65,12 +70,17 @@ const createPost = asyncHandler(async (req, res) => {
 });
 
 const deletePost = asyncHandler(async (req, res) => {
+    const userId = req.user._id
     const post = await Post.findById(req.params.id)
+    const user = await User.findById(userId)
     if (!post) {
         res.status(404)
         throw new Error("Post not found")
     }
+    const postsArray = user.posts
+    postsArray.splice(postsArray.indexOf(post._id),1)
     await Post.deleteOne();
+    await User.findByIdAndUpdate(userId, {posts:postsArray},{new:true})
     res.json(post).status(200);
 })
 
@@ -147,6 +157,7 @@ const addComment = asyncHandler(async (req, res) => {
 })
 
 const savePost = asyncHandler(async (req, res)=>{
+        
     const {postId} = req.params;
     const userId = req.user._id
     const user = await User.findById(userId);

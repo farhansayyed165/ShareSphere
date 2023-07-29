@@ -33,7 +33,7 @@ function LikeButton({ login, postId, token, postData, setPostData, user }) {
 
   return (
     <>
-      <button onClick={like}>{likes ? <AiFillLike/> : <AiOutlineLike/>}</button>
+      <button onClick={like} className='mx-2'>{likes ? <AiFillLike/> : <AiOutlineLike/>}</button>
       <p>{postData.likes.length}</p>
     </>
   )

@@ -33,6 +33,24 @@ const postsSchema = mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:"user"
     },
+    user:{
+        username:{
+            type:String,
+            required:true,
+        },
+        fullname:{
+            type:String,
+            required:true,
+        },
+        avatar:{
+            type:String,
+            required:true,
+        },
+        id:{
+            type:mongoose.Types.ObjectId,
+            ref:"user"
+        }
+    }
 
 },
 {

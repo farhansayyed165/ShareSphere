@@ -38,6 +38,13 @@ export async function getUser( username){
 
     return response.json(); 
 }
+
+export async function getUserById( id){
+    const response = await fetch(
+        `/api/users/profile/id/${id}`)
+
+    return response.json(); 
+}
 export async function updateUser(data, token){
     const response = await fetch('/api/users/update', {
         method: "PUT", 

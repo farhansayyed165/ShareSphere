@@ -75,7 +75,6 @@ const loginUser = asyncHandler(async (req,res,next)=>{
 })
 
 const viewProfile = asyncHandler (async (req, res)=>{
-    console.log(req.cookies)
     const id = req.user._id
     const details = await User.findById(id);
     if(!details){
@@ -87,9 +86,19 @@ const viewProfile = asyncHandler (async (req, res)=>{
 })
 
 const viewProfileUsername = asyncHandler (async (req, res)=>{
-    console.log(req.headers)
     const username = req.params.username
     const details = await User.findOne({username});
+    if(!details){
+        res.status(404)
+        throw new Error("User data is not valid")
+    }
+    details.password = null;
+    res.status(200).json(details)
+})
+
+const viewProfileId = asyncHandler (async (req, res)=>{
+    const id = req.params.id
+    const details = await User.findById(id)
     if(!details){
         res.status(404)
         throw new Error("User data is not valid")
@@ -171,4 +180,13 @@ const checkIfAllIsOK = asyncHandler(async (req, res)=>{
 
 
 
-module.exports = {createUser, loginUser, viewProfile,viewProfileUsername,updateUser, deleteUser, followUserHandler,checkIfAllIsOK}
+module.exports = {
+    createUser, 
+    loginUser, 
+    viewProfile,
+    viewProfileId,
+    viewProfileUsername,
+    updateUser, 
+    deleteUser, 
+    followUserHandler,
+    checkIfAllIsOK}
