@@ -49,14 +49,14 @@ const Profile = () => {
             <h1>Name: {data.fullname}</h1>
             <br />
             <h2> {data.username}</h2>
-            <br />
+            <br /> 
             <h1>Following: {data.following.length}</h1>
             <br />
             <h1>Followers: {data.followers.length}</h1>
             <br />
             <h1>email: {data.email}</h1>
             <br />
-            <ProfilePosts  data={data}></ProfilePosts>
+            <ProfilePosts  data={data} token={token} user={user}></ProfilePosts>
         </div>
     );
 }

@@ -5,7 +5,24 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      maxWidth:{
+        '1/4':'25%',
+        '1/2':'50%',
+        '3/4':'75%',
+        '1/3':'35%'
+      },
+      minWidth:{
+        '1/4':'25%',
+        '1/2':'50%',
+        '3/4':'75%',
+        '1/3':'35%'
+      },
+      colors:{
+        'navbarOrange':'#ffe8d6',
+        'body-color':'#0000'
+      }
+    },
   },
   plugins: [],
 }

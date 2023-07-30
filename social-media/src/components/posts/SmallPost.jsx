@@ -7,14 +7,14 @@ import { getUserById } from '../../api/userApi'
 import { timeSince } from '../../utils/parseDate'
 
 function SmallPost({ data, user, token, id }) {
-  console.log(timeSince(Date.parse(data.updatedAt)))
+
   const [postUser, setPostUser] = useState()
   useEffect(() => {
     getUserById(data.userId).then((response) => {
       setPostUser(response)
     })
   }, [])
-  console.log(data.comments.length)
+
   const navigate = useNavigate()
   const [postData, setPostData] = useState(data)
   const content = data.content ? (data.content.length > 200 ? data.content.substring(0, 200) + "..." : data.content) : ""
