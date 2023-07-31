@@ -23,6 +23,10 @@ export default {
         'body-color':'#0000'
       }
     },
+    fontFamily:{
+      sans:['Tillium-Web', 'sans-serif'],
+      'body':['Tillium-Web', 'sans-serif']
+    }
   },
   plugins: [],
 }

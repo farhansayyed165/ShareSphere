@@ -35,7 +35,10 @@ function FollowComponent({toFollowId, token, user, setData}) {
     }
     // console.log(user)
   return (
-    <button type="button" onClick={handleFollow}>{user.following.includes(toFollowId) ? "Unfollow":"Follow"}</button>
+    
+    <button className=" bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:self-center mb-1 ease-linear transition-all duration-150" type="button">
+                      {user.following.includes(toFollowId) ? "Unfollow":"Follow"}
+    </button>
     // <button onClick={handleFollow}>Follow</button>
   )
 }

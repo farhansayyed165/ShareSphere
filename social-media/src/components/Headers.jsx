@@ -13,7 +13,6 @@ export default function Headers() {
 
     const [cookies, setCookies, removeCookie] = useCookies(['access-token'])
     const token = (cookies['access-token']) ? cookies['access-token'] : undefined;
-    const [isValidToken, setIsValidToken] = useState(false)
     const navigate = useNavigate()
     // console.log(cookies)
 
@@ -49,7 +48,7 @@ export default function Headers() {
         <header className="sticky top-0 z-50 shadow-sm  bg-slate-100 ">
             <nav className="flex items-center justify-around p-4 shadow-black-sm lg:px-8 sticky top-0 border-b-2" aria-label="Global">
                 <Link className="site-logo" to={"/"}><h1 className=" text-lg font-semibold hover:text-teal-700">Socu</h1></Link>
-                <div class="relative m-2 flex items-center justify-center border-gray-400 mx-3 py-1 border-2 rounded" data-te-input-wrapper-init>
+                <div className="relative m-2 flex items-center justify-center border-gray-400 mx-3 py-1 border-2 rounded" data-te-input-wrapper-init>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -57,13 +56,13 @@ export default function Headers() {
                     className="h-5 w-5 mx-1 ml-2">
 
                     <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                        clip-rule="evenodd" />
+                        clipRule="evenodd" />
                 </svg>
                     <input
                         type="search"
-                        class="flex peer justify-center items-center min-h-[auto] w-full rounded bg-transparent px-3  leading-[1.6] outline-none focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-grey-500 dark:peer-focus:text-primary mb-1"
+                        className="flex peer justify-center items-center min-h-[auto] w-full rounded bg-transparent px-3  leading-[1.6] outline-none focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-grey-500 dark:peer-focus:text-primary mb-1"
                         id="exampleSearch2"
                         placeholder="Type query" />
                     {/* <label

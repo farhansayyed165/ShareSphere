@@ -25,10 +25,9 @@ function ProfilePosts({  data, user, token }) {
     })})
   },[])
   const renderPosts = posts.map((post, i) => {
-    let id = nanoid()
     return (
-      <div className='max-w-xl'>
-        <SmallPost key={id} data={post} id={i} token={token} user={user}></SmallPost>
+      <div className='max-w-xl' key={i}>
+        <SmallPost  data={post} id={i} token={token} user={user}></SmallPost>
       </div>
     )
   })
