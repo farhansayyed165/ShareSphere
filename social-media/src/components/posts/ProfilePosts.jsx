@@ -32,7 +32,7 @@ function ProfilePosts({  data, user, token }) {
     )
   })
   return (
-    <div className=' grid-cols-3 max-w-1/2 m-auto'>
+    <div className='flex justify-center flex-col items-center max-w-full  m-auto'>
       {renderPosts}
     </div>
   )

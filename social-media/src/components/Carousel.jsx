@@ -6,11 +6,11 @@ function Carousel({ items, id }) {
     const [renderButtons, setRenderButtons] = useState({ previous: false, next: true })
     const slides = items.map((item, i) => {
         return (
-            <div className={`${slideState == i ? "current-slide" : "hidden"} max-w-md bg-gray-30 transition-all duration-700 ease-in-out flex justify-center items-center object-cover z-0`} data-carousel-item key={i} slide={i}>
+            <div className={`${slideState == i ? "current-slide" : "hidden"} w-full bg-gray-30 transition-all duration-700 ease-in-out flex justify-center items-center object-cover z-0`} data-carousel-item key={i} slide={i}>
                 {items.length >1 && <div className='absolute top-0 right-0 bg-white/75 px-2 py-2 m-2 rounded-full'>
                  <p className=' font-normal text-xs'>{slideState+1}</p>
                 </div>}
-                <img src={item} alt="" className='max-w-md transition-all duration-700 ease-in-out object-cover items-center m-auto ' />
+                <img src={item} alt="" className='w-full transition-all duration-700 ease-in-out object-cover items-center m-auto ' />
             </div>
         )
     })
