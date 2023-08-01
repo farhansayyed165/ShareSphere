@@ -39,7 +39,7 @@ export default function Headers() {
     const loggedInNavElements = (
         <div className="ml-6 flex min-w-1/3 justify-between justify-self-stretch">
             <Link to={"/submit"} >
-                <button onClick={sendRequest} className="bg-transperant text-black  border-slate-400 border-2 font-bold p-2 mt-1 m-0 rounded flex items-center justify-center text-xl "><GrAdd/></button>
+                <button onClick={sendRequest} title="Create a Post" className="bg-transperant text-black  border-slate-400 border-2 font-bold p-2 mt-1 m-0 rounded flex items-center justify-center text-xl "><GrAdd/></button>
             </Link>
             <NavDropDown user={user} handleLogout={handleLogout} />
         </div>

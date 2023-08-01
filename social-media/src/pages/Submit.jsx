@@ -17,7 +17,7 @@ const Submit = () => {
     const [formData, setFormData] = useState({
         title: "",
         content: "",
-        images:[],
+        images: [],
     });
 
 
@@ -37,17 +37,17 @@ const Submit = () => {
     function handleSubmit(e) {
         e.preventDefault();
         // calling the function 
-         uploadImages()
-         .then((form)=>{
-             console.log("this is form data before submitting", formData, "\n",form)
-             submitPost(form, token)
-             .then((response)=>{
-                 console.log("end with this",response)
-                 navigate(`/posts/${response._id}`)
-             })
+        uploadImages()
+            .then((form) => {
+                console.log("this is form data before submitting", formData, "\n", form)
+                submitPost(form, token)
+                    .then((response) => {
+                        console.log("end with this", response)
+                        navigate(`/posts/${response._id}`)
+                    })
             })
     }
-    
+
 
     //this function will loop through the images uploaded by user,
     // upload them to cloudinary
@@ -65,7 +65,7 @@ const Submit = () => {
             imageData.append("upload_preset", "o1hlhhqo");
             const response = await fetch(
                 'https://api.cloudinary.com/v1_1/drqdgsnat/image/upload', {
-                    method: 'POST',
+                method: 'POST',
                 body: imageData
             })
             const data = await response.json()
@@ -73,47 +73,57 @@ const Submit = () => {
             //storing the url in our array
             console.log("pushing images");
             images.push(data.secure_url)
-            
+
         }
         console.log("done uploading images") //for debugging
         console.log(images)
 
         // this setFormData does not work 
-        setFormData(prev=>({...prev, images:images}))
+        setFormData(prev => ({ ...prev, images: images }))
         const form = {
             ...formData,
             images
         }
-        console.log("done pushing images in formData ",formData)
+        console.log("done pushing images in formData ", formData)
         return Promise.resolve(form)
     }
 
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name='title'
-                    placeholder='Title'
-                    onChange={handleChange}
-                    value={formData.title}
-                />
-                <input
-                    type="text"
-                    name='content'
-                    placeholder='content'
-                    onChange={handleChange}
-                    value={formData.content}
-                />
-                <br />
-                <button type='button' onClick={uploadImages}>Upload Images</button>
-                <button type='submit' style={{ color: buttonStyle }}>Submit</button>
-                <Image
-                    images={img}
-                    setImages={setImg}
-                />
-            </form>
+        <div className='flex items-center justify-center mt-3'>
+            <div className='max-w-3/4 bg-white border-2 border-slate-400 p-8'>
+                <h2>Create Post</h2>
+                <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-700 rounded"></hr>
+                <form onSubmit={handleSubmit} >
+                    <input
+                        type="text"
+                        name='title'
+                        placeholder='Title'
+                        onChange={handleChange}
+                        value={formData.title}
+                        className='w-full border-gray-400 p-2 border-2 rounded mb-4 '
+                    />
+                    <textarea
+                        id='content'
+                        type="text"
+                        name='content'
+                        placeholder='Body'
+                        rows={4}
+                        onChange={handleChange}
+                        value={formData.content}
+                        className='border-2 border-gray-400 w-full rounded resize-none p-2 mb-3'
+
+                    />
+                    <Image
+                        images={img}
+                        setImages={setImg}
+                    />
+                    <div className='flex w-full justify-end'>
+                        <button type='button' onClick={() => { navigate(-1) }} className='p-2 px-3 mx-5 border-2 rounded bg-red-500 text-white focus:bg-red-600 hover:bg-red-600 transition-all duration-200 ease-in-out'>Cancel</button>
+                        <button type='submit' style={{ color: buttonStyle }} className='text-white p-2 px-3 border-2 rounded bg-blue-400 focus:bg-blue-600 hover:bg-blue-600  transition-all duration-200 ease-in-out'><span className='text-white'>Submit</span></button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
