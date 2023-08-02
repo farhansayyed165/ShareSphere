@@ -19,6 +19,9 @@ export default {
         '3/4':'75%',
         '1/3':'35%'
       },
+      width:{
+        '9/10':'90%'
+      },
       colors:{
         'navbarOrange':'#ffe8d6',
         'body-color':'#0000'
