@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Auth } from '../features/userSlice';
 import { useLocation, useOutletContext, Link } from "react-router-dom";
 import { loginUser } from "../api/userApi";
+import {ReactComponent as GroupSelfie} from '../assets/Login.svg'
 
 
 
@@ -41,6 +42,7 @@ export default function Login() {
     }
     return (
         <div className="h-screen bg-slate-300 font-Inter">
+            
             <div className={`${message ? 'absolute' : 'hidden'}`}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <h2>{message}</h2>
@@ -48,12 +50,13 @@ export default function Login() {
                     <button onClick={closePopup}>OK</button>
                 </div>
             </div>
+            <GroupSelfie className="absolute right-0 max-w-[66%] max-h-full"/>
             <div className="flex w-1/3 flex-col  h-screen items-center bg-white">
 
                 <div className="w-full h-2/3 flex  mt-[15vh] items-center  flex-col">
                     <div className="w-9/10 text-xl">
                         <span className="mb-2 mt-5">Don't have an account?</span>
-                        <Link to={"/signup"} className="mb-2 mt-1 mx-4 text-blue-500 font-semibold">Signup Here</Link>
+                        <Link to={"/signup"} className="mb-2 mt-1 mx-4 text-[#F9A826] font-semibold">Signup Here</Link>
                         {/* <div className="flex items-center justify-center">
                                 <span className="absolute bg-white px-2">OR</span>
                                 <hr className="block w-full h-2px my-[30px] border-black dark:bg-gray-700 rounded"></hr>
@@ -83,7 +86,7 @@ export default function Login() {
                             className="w-9/10 p-2 rounded border-2  block border-slate-400 mb-10 font-[Karla]"
                         />
 
-                        <button className="bg-blue-500 text-white px-4 py-1 border-blue-900 border-2 rounded font-[Karla] font-semibold text-lg">Log in</button>
+                        <button className="bg-[#F9A826] text-white px-4 py-1 border-[#C7861E] border-2 rounded font-[Karla] font-semibold text-lg">Log in</button>
                     </form>
                 </div>
             </div>
