@@ -24,7 +24,9 @@ export default {
       },
       colors:{
         'navbarOrange':'#ffe8d6',
-        'body-color':'#0000'
+        'body-color':'#0000',
+        'main-orange':'#F9A826',
+        'darker-orange':'#C7861E'
       }
     },
     fontFamily:{

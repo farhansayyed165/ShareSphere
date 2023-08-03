@@ -62,7 +62,7 @@ export default function Headers() {
                 </svg>
                     <input
                         type="search"
-                        className="flex peer justify-center items-center min-h-[auto] w-full rounded bg-transparent px-3  leading-[1.6] outline-none focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-grey-500 dark:peer-focus:text-primary mb-1"
+                        className="flex border-0 p-0 peer justify-center items-center min-h-[auto] w-full rounded bg-transparent px-3  leading-[1.6] outline-none focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-grey-500 dark:peer-focus:text-primary mb-1"
                         id="exampleSearch2"
                         placeholder="Type query" />
                     {/* <label

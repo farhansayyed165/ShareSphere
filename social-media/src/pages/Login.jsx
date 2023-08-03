@@ -2,14 +2,18 @@ import { React, useState, useEffect } from "react"
 import { useCookies } from 'react-cookie'
 import { useSelector, useDispatch } from 'react-redux';
 import { Auth } from '../features/userSlice';
-import { useLocation, useOutletContext, Link } from "react-router-dom";
+import { useLocation, useOutletContext, Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api/userApi";
 import {ReactComponent as GroupSelfie} from '../assets/Login.svg'
+import {ReactComponent as LoginResponsive} from '../assets/Login-responsive.svg'
+import {AiOutlineArrowLeft} from 'react-icons/ai'
+import './login.css'
 
 
 
 export default function Login() {
     // let redirectToPreviousPage 
+    const navigate = useNavigate()
     const [navigateto, setNavigateTo] = useOutletContext()
 
     const redirectToPreviousPage = useLocation().state?.redirectLink ? useLocation().state.redirectLink : "/"
@@ -38,20 +42,23 @@ export default function Login() {
         }))
     }
     function closePopup() {
-        setMessage(undefined)
+        setMessage(false)
+    }
+    function navigateBack(){
+        navigate(-1)
     }
     return (
         <div className="h-screen bg-slate-300 font-Inter">
-            
-            <div className={`${message ? 'absolute' : 'hidden'}`}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <h2>{message}</h2>
-                    <br />
-                    <button onClick={closePopup}>OK</button>
+            <button type="button" onClick={navigateBack} className="rounded-full absolute top-0 left-0 p-5 border-2 border-[#F9A826] mx-4 mt-5"><AiOutlineArrowLeft/></button>
+            <div className={`${message ? 'absolute' : 'hidden'}  w-full m-auto left-0 right-0 top-0 bottom-0 z-50 bg-black/10`}>
+                <div className="absolute w-[250px] h-[100px] border-2 border-red-500 m-auto left-0 right-0 top-0 bottom-0 flex items-center justify-center bg-white rounded flex-col">
+                    <h2 className=" font-semibold mb-4">{message}</h2>
+                    <button onClick={closePopup} className="bg-[#F9A826] border-2 border-[#C7861E] rounded-sm text-white px-4">OK</button>
                 </div>
             </div>
-            <GroupSelfie className="absolute right-0 max-w-[66%] max-h-full"/>
-            <div className="flex w-1/3 flex-col  h-screen items-center bg-white">
+            <GroupSelfie className="login-group absolute right-0 xl:max-w-[66%] lg:max-w-[66%] md:max-w-1/2 max-h-full p-1 "/>
+            <LoginResponsive className="login-responsive max-h-full p-1 absolute right-0 max-w-1/2"/>
+            <div className="flex lg:max-w-1/3 md:max-w-1/2 sm:max-w-1/2 flex-col h-screen items-center bg-white">
 
                 <div className="w-full h-2/3 flex  mt-[15vh] items-center  flex-col">
                     <div className="w-9/10 text-xl">
@@ -61,7 +68,7 @@ export default function Login() {
                                 <span className="absolute bg-white px-2">OR</span>
                                 <hr className="block w-full h-2px my-[30px] border-black dark:bg-gray-700 rounded"></hr>
                         </div> */}
-                        <hr className="block w-full h-2px my-12 border-black dark:bg-gray-700 rounded"></hr>
+                        <hr className="block w-9/10 h-2px my-12 border-black dark:bg-gray-700 rounded"></hr>
                         <h1 className="w-full text-2xl text-bold mb-6">Login</h1>
                     </div>
                     <form onSubmit={handleSubmit} className="login-form w-9/10">
