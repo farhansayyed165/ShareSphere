@@ -12,3 +12,6 @@ input{
 option{
     font: 'Karla',sans-serif;
 }
+.font-change{
+    font-size: clamp(15px, 0rem + 1.2vw, 12px);
+}

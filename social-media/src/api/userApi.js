@@ -32,14 +32,17 @@ export async function loginUser(data) {
 
 }
 
-export async function getUser( username){
+export async function getUser(username){
     const response = await fetch(
         `/api/users/profile/${username}`)
 
     return response.json(); 
 }
 
-export async function getUserById( id){
+export async function getUserById(id){
+    if(!id){
+        throw new Error("Id is undefine")
+    }
     const response = await fetch(
         `/api/users/profile/id/${id}`)
 

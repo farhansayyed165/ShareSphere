@@ -26,13 +26,13 @@ function ProfilePosts({  data, user, token }) {
   },[])
   const renderPosts = posts.map((post, i) => {
     return (
-      <div className='max-w-xl' key={i}>
+      <div className='w-full flex items-center justify-center' key={i}>
         <SmallPost  data={post} id={i} token={token} user={user}></SmallPost>
       </div>
     )
   })
   return (
-    <div className='flex justify-center flex-col items-center max-w-full  m-auto'>
+    <div className='flex justify-center flex-col items-center w-full  '>
       {renderPosts}
     </div>
   )

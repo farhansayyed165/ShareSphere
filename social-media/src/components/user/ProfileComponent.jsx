@@ -11,7 +11,7 @@ function ProfileComponent({ data, user, token, setData   }) {
 // 'https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80'
   const editProfileComponent = (
     <>
-      <button type='button' onClick={handleEdit} className=" bg-main-orange border-2 border-main-orange font-[Karla] active:border-darker-orange uppercase text-white font-bold hover:shadow-md shadow text-md px-4 py-2 rounded outline-none focus:outline-none sm:self-center mb-1 ease-linear transition-all duration-150">{"Edit profile"}</button>
+      <button type='button' onClick={handleEdit} className=" bg-[#eea735] border- border-main-orange font-[Karla] active:border-darker-orange uppercase text-white font-bold hover:shadow-md shadow text-md px-4 py-2 rounded outline-none focus:outline-none sm:self-center mb-1 ease-linear transition-all duration-150">{"Edit profile"}</button>
     </>
   )
 

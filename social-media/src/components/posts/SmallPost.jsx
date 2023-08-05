@@ -19,7 +19,7 @@ function SmallPost({ data, user, token, id }) {
   const [postData, setPostData] = useState(data)
   const content = data.content ? (data.content.length > 200 ? data.content.substring(0, 200) + "..." : data.content) : ""
   return (
-    <div className='max-w-full xl:w-[700px] lg:w-[700px] md:w-[500px] sm:w-[400px]  my-4 border-2 py-2 px-5 sm:min-w-full' id={id}>
+    <div className='lg:w-[700px] md:w-[500px]  my-4 border-2 py-2 px-5 w-full' id={id}>
 
       <div className=''>
         {postUser ? <Link to={`/${postUser.username}`}>

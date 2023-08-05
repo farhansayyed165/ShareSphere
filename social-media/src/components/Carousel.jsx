@@ -52,7 +52,7 @@ function Carousel({ items, id }) {
     return (
         <div className='relative max-w-lg flex items-center justify-center m-auto ' data-carousel="slide">
             {/* Carouse-wrapper */}
-            <div className='relative max-w-lg bg-black flex items-center overflow-hidden rounded-lg transition-all duration-500 ease-linear' >
+            <div className='relative max-w-full bg-black flex items-center overflow-hidden rounded-lg transition-all duration-500 ease-linear' >
                 {slides}
                 {/* {Slides Control} */}
                 {items.length > 1 ? <>

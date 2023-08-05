@@ -5,12 +5,13 @@ import { UnAuth } from "../features/userSlice";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import NavDropDown from "./user/NavDropDown";
-import {GrAdd} from 'react-icons/gr'
+import { GrAdd, GrClose } from 'react-icons/gr'
+import { BsSearch } from 'react-icons/bs'
 
 
 export default function Headers() {
     const path = useLocation().pathname
-
+    const [search, setSearch] = useState()
     const [cookies, setCookies, removeCookie] = useCookies(['access-token'])
     const token = (cookies['access-token']) ? cookies['access-token'] : undefined;
     const navigate = useNavigate()
@@ -32,50 +33,60 @@ export default function Headers() {
 
     const notLoggedInNavElements = (
         <>
-            <NavLink to={"/login"} state={{ redirectLink: path }}>Login</NavLink>
+            <NavLink to={"/login"} state={{ redirectLink: path }} >Login</NavLink>
             <NavLink to={"/signup"} state={{ redirectLink: path }}>Signup</NavLink>
         </>
     )
     const loggedInNavElements = (
-       <>
+        <>
             <Link to={"/submit"} >
-                <button onClick={sendRequest} title="Create a Post" className="bg-transperant text-black  border-main-orange border-2 font-bold p-2 mt-1 m-0 rounded flex items-center justify-center text-xl "><GrAdd/></button>
+                <button onClick={sendRequest} title="Create a Post" className="bg-transperant text-black  border-main-orange border-2 font-bold p-2 mt-1 m-0 rounded flex items-center justify-center text-xl "><GrAdd /></button>
             </Link>
             <NavDropDown user={user} handleLogout={handleLogout} />
-       </>
+        </>
     )
+    const openSearch = () => { setSearch(true) }
+    const closeSearch = () => { setSearch(false) }
     return (
-        <header className="sticky top-0 z-50 shadow-md  bg-white">
-            <nav className="flex items-center justify-around p-4 shadow-black-sm lg:px-8 sticky top-0 border-b-2" aria-label="Global">
-                <Link className="site-logo" to={"/"}><h1 className=" text-lg font-semibold hover:text-teal-700">Socu</h1></Link>
-                <div className="relative m-2 flex items-center justify-center border-gray-400 mx-3 py-1 border-2 rounded" data-te-input-wrapper-init>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-5 w-5 mx-1 ml-2">
+        <>
+            <header className="sticky top-0 z-40 shadow-md bg-white">
+                <nav className="flex items-center justify-evenly px-4 py-[2px] shadow-black-sm lg:px-8 sticky top-0 border-b-2" aria-label="Global">
+                    <Link className="site-logo flex justify-self-start" to={"/"}><h1 className=" text-lg font-semibold hover:text-teal-700">Socu</h1></Link>
+                    <div className="absolute  text-gray-600 sm:flex sm:relative  items-center sm:justify-self-center justify-center hidden" >
+                        <input
+                            className="border-2 border-gray-300 bg-white h-10 pl-2 pr-8 rounded-lg text-sm focus:outline-none"
+                            type="search" name="search" placeholder="Search" />
+                        <button type="submit" className="absolute flex items-center justify-center right-0 top-0 mt-3 mr-2">
+                            <BsSearch className="flex items-center justify-center mt-[5px] " size={18} />
+                        </button>
+                    </div>
+                    <button type="button"
+                        className="sm:hidden flex items-center justify-center justify-self-start ring-2 p-1 rounded-sm ring-main-orange "
+                        onClick={openSearch} >
+                        <BsSearch className="mx-1" />
+                    </button>
+                    {
+                        token ? loggedInNavElements : notLoggedInNavElements
+                    }
 
-                    <path
-                        fillRule="evenodd"
-                        d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                        clipRule="evenodd" />
-                </svg>
+
+                </nav>
+            </header>
+
+            <div className={`${search ? "sticky top-0 left-0" : "hidden"}  mt-3 z-50 w-full bg-white shadow text-gray-600 flex sm:hidden items-center sm:justify-self-center justify-center `}>
+                <button type="button" onClick={closeSearch} className="absolute z-10 left-0 ml-[4vw] border-2 rounded-full border-main-orange p-1 bg-red-300 " >
+                    <GrClose size={20} />
+                </button>
+
+                <div className="relative flex justify-evenly w-9/10">
                     <input
-                        type="search"
-                        className="flex border-0 p-0 peer justify-center items-center max-h-[20px] w-full rounded bg-transparent px-3  leading-[1.6] outline-none focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-grey-500 dark:peer-focus:text-primary mb-1"
-                        id="exampleSearch2"
-                        placeholder="Type query" />
-                    {/* <label
-                        htmlFor="exampleSearch2"
-                        class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-black transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-black dark:peer-focus:text-primary"
-                    >Search</label> */}
+                        className="border-2 border-gray-300 bg-white h-10 pl-2 w-3/4 mr-1 pr-8 rounded-lg text-sm focus:outline-none"
+                        type="search" name="search" placeholder="Search" />
+                    <button type="submit" className="absolute flex items-center justify-center right-0 top-0 mt-3 mr-[4vw]">
+                        <BsSearch className="flex items-center justify-center mt-[5px] " size={18} color="#F9A826" />
+                    </button>
                 </div>
-                {
-                    token ? loggedInNavElements : notLoggedInNavElements
-                }
-
-
-            </nav>
-        </header>
+            </div>
+        </>
     )
 }
