@@ -26,7 +26,11 @@ export default {
         'navbarOrange':'#ffe8d6',
         'body-color':'#0000',
         'main-orange':'#F9A826',
-        'darker-orange':'#C7861E'
+        'darker-orange':'#C7861E',
+        'main-complimentary':"#2677F9"
+      },
+      backgroundImage:{
+        'signup-bg':'./src/assets/colorful-paint-canvas.webp'
       }
     },
     fontFamily:{

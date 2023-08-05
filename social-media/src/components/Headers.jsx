@@ -37,15 +37,15 @@ export default function Headers() {
         </>
     )
     const loggedInNavElements = (
-        <div className="ml-6 flex min-w-1/3 justify-between justify-self-stretch">
+       <>
             <Link to={"/submit"} >
-                <button onClick={sendRequest} title="Create a Post" className="bg-transperant text-black  border-slate-400 border-2 font-bold p-2 mt-1 m-0 rounded flex items-center justify-center text-xl "><GrAdd/></button>
+                <button onClick={sendRequest} title="Create a Post" className="bg-transperant text-black  border-main-orange border-2 font-bold p-2 mt-1 m-0 rounded flex items-center justify-center text-xl "><GrAdd/></button>
             </Link>
             <NavDropDown user={user} handleLogout={handleLogout} />
-        </div>
+       </>
     )
     return (
-        <header className="sticky top-0 z-50 shadow-sm  bg-slate-100 ">
+        <header className="sticky top-0 z-50 shadow-md  bg-white">
             <nav className="flex items-center justify-around p-4 shadow-black-sm lg:px-8 sticky top-0 border-b-2" aria-label="Global">
                 <Link className="site-logo" to={"/"}><h1 className=" text-lg font-semibold hover:text-teal-700">Socu</h1></Link>
                 <div className="relative m-2 flex items-center justify-center border-gray-400 mx-3 py-1 border-2 rounded" data-te-input-wrapper-init>
@@ -62,7 +62,7 @@ export default function Headers() {
                 </svg>
                     <input
                         type="search"
-                        className="flex border-0 p-0 peer justify-center items-center min-h-[auto] w-full rounded bg-transparent px-3  leading-[1.6] outline-none focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-grey-500 dark:peer-focus:text-primary mb-1"
+                        className="flex border-0 p-0 peer justify-center items-center max-h-[20px] w-full rounded bg-transparent px-3  leading-[1.6] outline-none focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-grey-500 dark:peer-focus:text-primary mb-1"
                         id="exampleSearch2"
                         placeholder="Type query" />
                     {/* <label

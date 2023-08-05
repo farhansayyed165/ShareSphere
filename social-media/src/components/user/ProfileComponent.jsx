@@ -4,24 +4,28 @@ import FollowComponent from './Follow'
 import coverImg from '../../assets/pexels-miriam-espacio-2694037.jpg'
 
 function ProfileComponent({ data, user, token, setData   }) {
+
   const [edit, setEdit] = useState(false)
   const toFollowId = data._id;
   const backgroundImageUrl = data?.backgroundImage ? data.backgroundImage : coverImg
 // 'https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80'
   const editProfileComponent = (
     <>
-      <EditProfile token={token} data={data} showEdit={edit} setOff={setEdit} />
-      <button type='button' onClick={handleEdit} className=" bg-orange-600 active:bg-orange-800 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:self-center mb-1 ease-linear transition-all duration-150">{edit ? "Cancel":"Edit profile"}</button>
+      <button type='button' onClick={handleEdit} className=" bg-main-orange border-2 border-main-orange font-[Karla] active:border-darker-orange uppercase text-white font-bold hover:shadow-md shadow text-md px-4 py-2 rounded outline-none focus:outline-none sm:self-center mb-1 ease-linear transition-all duration-150">{"Edit profile"}</button>
     </>
   )
 
   const FollowComponentRender = user?.login ? <FollowComponent toFollowId={toFollowId} token={token} user={user} setData={setData} /> : <></>
   const renderEdit = (data.username == user?.username) ? editProfileComponent : FollowComponentRender
   function handleEdit(e) {
+    e.preventDefault()
     setEdit(!edit)
+ 
   }
 
   return (
+    <>
+          { (data.username == user?.username) && <EditProfile token={token} data={data} showEdit={edit} setOff={setEdit}/>}
     <main className="profile-page ">
       <section className="relative block min-h-[500px]">
         <div className="absolute top-0 w-full h-[75%] bg-center bg-cover" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
@@ -67,7 +71,7 @@ function ProfileComponent({ data, user, token, setData   }) {
                  {data?.subtext ? data.subtext : "Student - Computer Science"}
                 </div>
               </div>
-              <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
+              <div className="mt-4 py-10 border-blueGray-200 text-center">
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full lg:w-9/12 px-4">
                     <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
@@ -81,6 +85,7 @@ function ProfileComponent({ data, user, token, setData   }) {
         </div>
       </section>
     </main>
+    </>
   )
 }
 

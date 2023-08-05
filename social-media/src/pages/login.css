@@ -24,4 +24,8 @@
     .login-responsive{
         display: none;
     }
+    .signup-svg{
+        display: none;
+        width: 0;
+    }
 }

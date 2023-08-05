@@ -5,10 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Auth } from '../features/userSlice'
 import { useCookies } from 'react-cookie';
 import { credentialsLogin } from '../utils/loginUser';
-import {ReactComponent as SignupSVG} from '../assets/Join.svg'
-import {AiOutlineArrowLeft} from 'react-icons/ai'
-
-
+import { ReactComponent as SignupSVG } from '../assets/Join.svg'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
+import './login.css'
 
 
 const CreateUser = () => {
@@ -45,19 +44,20 @@ const CreateUser = () => {
             [name]: value
         }))
     }
-    function navigateBack(){
+    function navigateBack() {
         navigate(-1)
-    }   
+    }
     return (
-        <div className='flex  bg-slate-800 h-screen'>
-            <button type="button" onClick={navigateBack} className="rounded-full bg-white absolute top-0 left-0 p-5 border-2 border-[#F9A826] m-8 mt-10 ml-10"><AiOutlineArrowLeft/></button>
-            <div className='w-1/2 m-8 border-2 mr-0 border-r-0 bg-slate-300 flex items-center justify-center'>
-                <SignupSVG className='w-full m-0 '></SignupSVG>
+
+        <div className='flex h-screen bg-gradient-to-r from-main-orange  to-slate-300'>
+            <button type="button" onClick={navigateBack} className="rounded-full bg-white absolute top-0 left-0 p-5 border-2 border-[#F9A826] m-8 mt-10 ml-10"><AiOutlineArrowLeft /></button>
+            <div className='w-1/2 m-8 border-2 mr-0 border-r-0 bg-slate-300 sm:flex hidden items-center justify-center signup-svg'>
+                <SignupSVG className='w-full m-0 signup-svg'></SignupSVG>
             </div>
-            <div className='w-1/2 flex flex-col items-center border-2 ml-0 m-8 border-l-0 bg-white'>
+            <div className='w-full sm:w-1/2 flex flex-col items-center border-2 sm:ml-0 m-8 border-l-0 bg-white'>
                 <form onSubmit={handleSubmit} className='flex flex-col items-center translate-y-6 w-9/10  p-2'>
                     <h1 className='text-center font-semibold text-xl mb-2'>Welcome!</h1>
-                    <p className='mb-7 text-center'>Join our community of creators and innovators! Sign up today to unlock a world of possibilities. Start your journey with us and let's build something amazing together!</p>
+                    <p className='lg:mb-7 md:mb3 text-center sm:text-normal text-sm '>Join our community of creators and innovators! Sign up today to unlock a world of possibilities. Start your journey with us and let's build something amazing together!</p>
                     <input
                         type="text"
                         placeholder='Name'
@@ -117,7 +117,7 @@ const CreateUser = () => {
                     />
 
 
-                    <button className='px-4 py-2 border-darker-orange bg-main-orange border-2 text-white rounded mt-5'>Submit</button>
+                    <button className='px-4 py-2 border-darker-orange bg-main-orange border-2 text-white rounded sm:mt-5'>Submit</button>
                 </form>
             </div>
 
