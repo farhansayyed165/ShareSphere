@@ -28,7 +28,7 @@ function NavDropDown({ user, handleLogout }) {
     //     </>
     // )
     return (
-        <div className="relative text-left min-w-[100px] max-h-[50px]" onClick={() => { setShow(!show) }}>
+        <div className="relative text-left min-w-[100px] max-h-[50px] sm:inline-block hidden " onClick={() => { setShow(!show) }}>
             <div className="w-full">
                 <button type="button" className="inline-flex w-full justify-center items-center gap-x-1.5 rounded-md border-main-orange border-[2px] bg-white px-3 py-1 text-sm font-semibold text-gray-900 shadow-sm  hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
                     <img src={user.avatar} alt={`${user.fullname}'s profile picture`} className='w-8 h-8 rounded-full object-cover mr-1 shadow' />

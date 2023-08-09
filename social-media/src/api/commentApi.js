@@ -19,9 +19,22 @@ export async function createComment(data,token){
     }
 }
 
-export async function getComment(commentId){
+export async function getComment(commentId,p){
     const response = await fetch(
         `http://localhost:5000/api/comments/${commentId}`)
 
     return response.json(); 
+}
+
+export async function getCommentsPaginated(postId, p){
+    console.log(postId)
+    const page = p ? p : 1
+    try {
+        const response = await fetch(`/api/comments/infiniteComments/${postId}?page=${page}&limit=5`) 
+        return response.json()
+    }
+    catch(e){
+        console.log(e)
+        return e;
+    }
 }

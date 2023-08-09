@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const validateToken = require("../middleware/validateToken");
-const {getComment, getComments,createComment,deleteComment, updateComment, likeComment} = require("../controllers/commentController");
+const {paginatedCommentModel} = require("../middleware/paginateModel")
+const {getComment, getComments,createComment,deleteComment, updateComment, likeComment, getPostComments} = require("../controllers/commentController");
 
 router.get("/", getComments);
 
 router.get("/:id", getComment);
 
+router.put("/infiniteComments/:id",paginatedCommentModel,getPostComments)
 
 router.post("/createComment",validateToken, createComment);
 

@@ -19,7 +19,7 @@ function SmallPost({ data, user, token, id }) {
   const [postData, setPostData] = useState(data)
   const content = data.content ? (data.content.length > 200 ? data.content.substring(0, 200) + "..." : data.content) : ""
   return (
-    <div className='lg:w-[700px] md:w-[500px]  my-4 border-2 py-2 px-5 w-full' id={id}>
+    <div className='lg:w-[700px] md:w-[500px]  my-4 border-2 py-2 px-5 w-full z-40' id={id}>
 
       <div className=''>
         {postUser ? <Link to={`/${postUser.username}`}>
@@ -34,6 +34,7 @@ function SmallPost({ data, user, token, id }) {
           <h1 className='max-w-md text-left my-2 font-semibold text-lg'>{data.title}</h1>
           <h5 className='text-gray-700 max-w-full text-left'>{content}</h5>
         </div>
+
         {
           data.images.length > 0 ? <Carousel items={data.images} id={id} /> : <></>
         }

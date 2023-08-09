@@ -32,10 +32,10 @@ function LikeButton({ login, postId, token, postData, setPostData, user }) {
   const likes = postData.likes.includes(user._id) ? true : false
 
   return (
-    <>
+    <span className='flex'>
       <button onClick={like} className='mx-2'>{likes ? <AiFillLike/> : <AiOutlineLike/>}</button>
       <p>{postData.likes.length}</p>
-    </>
+    </span>
   )
 }
 

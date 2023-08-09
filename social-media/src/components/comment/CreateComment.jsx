@@ -32,19 +32,19 @@ const CreateComment = ({ postId, setPostData }) => {
         }
         return (
             <>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className='mt-3 relative mb-10'>
                     <textarea
                         name="content"
                         id="create-comment-textarea"
-                        cols="30" rows="15"
                         placeholder='comments'
                         onChange={handleChange}
                         value={commentData.content}
+                        rows={2}
+                        className='border-2 border-gray-400 w-full rounded resize-none p-2 mb-2 flex items-center'
                     ></textarea>
-                    <br />
-    
-                    <button type='submit'>Submit</button>
+                    <button type='submit' className='font-semibold tracking-wide uppercase text-white p-2 px-3 border-2 rounded bg-[hsla(42,100%,53%,1)] focus:bg-[#d68400] hover:bg-[#d68400]  transition-all duration-200 ease-in-out'>Submit</button>
                 </form>
+
             </>
     
         );

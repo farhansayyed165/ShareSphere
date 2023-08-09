@@ -1,5 +1,5 @@
 const express = require("express");
-const paginateModel = require("../middleware/paginateModel")
+const {paginateModel} = require("../middleware/paginateModel")
 const {getPosts,getPost, createPost, deletePost, updatePost, likePost, addComment, savePost, getUserPosts, paginatedPosts}= require("../controllers/postsController");
 const router = express.Router();
 const validateToken = require("../middleware/validateToken");

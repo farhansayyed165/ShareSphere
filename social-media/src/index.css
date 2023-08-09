@@ -3,6 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+    scrollbar-width: thin;
+}
+
+.hide-scroll{
+    scrollbar-width: none;
+}
+
 input{
     padding: 0.5rem;
     border: 2px solid gray;
@@ -14,4 +22,10 @@ option{
 }
 .font-change{
     font-size: clamp(15px, 0rem + 1.2vw, 12px);
+}
+
+li{
+    margin-block: 1.2rem;
+    font-family: "Karla", sans-serif;
+    font-size: min(20px, 8vw);
 }

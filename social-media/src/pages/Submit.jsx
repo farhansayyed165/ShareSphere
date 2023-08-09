@@ -4,7 +4,7 @@ import { submitPost } from '../api/postApi';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
-const Submit = () => {
+const Submit = ({ close }) => {
     // fetching cookies 
     const navigate = useNavigate()
     const [cookies] = useCookies(['access-token'])
@@ -90,39 +90,41 @@ const Submit = () => {
 
 
     return (
-        <div className='flex items-center justify-center mt-3'>
-            <div className='max-w-3/4 bg-white border-2 border-slate-400 p-8'>
-                <h2>Create Post</h2>
-                <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-700 rounded"></hr>
-                <form onSubmit={handleSubmit} >
-                    <input
-                        type="text"
-                        name='title'
-                        placeholder='Title'
-                        onChange={handleChange}
-                        value={formData.title}
-                        className='w-full border-gray-400 p-2 border-2 rounded mb-4 '
-                    />
-                    <textarea
-                        id='content'
-                        type="text"
-                        name='content'
-                        placeholder='Body'
-                        rows={4}
-                        onChange={handleChange}
-                        value={formData.content}
-                        className='border-2 border-gray-400 w-full rounded resize-none p-2 mb-3'
+        <div className='w-full absolute z-50 h-full bg-black/70 overflow-scroll'>
+            <div className='flex items-center justify-center mt-3 w-full '>
+                <div className='w-3/4 md:w-1/2  bg-white border-2 border-slate-400 p-8 shadow-md'>
+                    <h2>Create Post</h2>
+                    <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-700 rounded"></hr>
+                    <form onSubmit={handleSubmit}  >
+                        <input
+                            type="text"
+                            name='title'
+                            placeholder='Title'
+                            onChange={handleChange}
+                            value={formData.title}
+                            className='w-full border-gray-400 p-2 border-2 rounded mb-4 '
+                        />
+                        <textarea
+                            id='content'
+                            type="text"
+                            name='content'
+                            placeholder='Body'
+                            rows={4}
+                            onChange={handleChange}
+                            value={formData.content}
+                            className='border-2 border-gray-400 w-full rounded resize-none p-2 mb-3'
 
-                    />
-                    <Image
-                        images={img}
-                        setImages={setImg}
-                    />
-                    <div className='flex w-full justify-end'>
-                        <button type='button' onClick={() => { navigate(-1) }} className='p-2 px-3 mx-5 border-2 rounded bg-red-500 text-white focus:bg-red-600 hover:bg-red-600 transition-all duration-200 ease-in-out'>Cancel</button>
-                        <button type='submit' style={{ color: buttonStyle }} className='text-white p-2 px-3 border-2 rounded bg-blue-400 focus:bg-blue-600 hover:bg-blue-600  transition-all duration-200 ease-in-out'><span className='text-white'>Submit</span></button>
-                    </div>
-                </form>
+                        />
+                        <Image
+                            images={img}
+                            setImages={setImg}
+                        />
+                        <div className='flex w-full justify-end'>
+                            <button type='button' onClick={close} className='p-2 px-3 mx-5 border-2 rounded bg-red-500 text-white focus:bg-red-600 hover:bg-red-600 transition-all duration-200 ease-in-out'>Cancel</button>
+                            <button type='submit' style={{ color: buttonStyle }} className='text-white p-2 px-3 border-2 rounded bg-blue-400 focus:bg-blue-600 hover:bg-blue-600  transition-all duration-200 ease-in-out'><span className='text-white'>Submit</span></button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );

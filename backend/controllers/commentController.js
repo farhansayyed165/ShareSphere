@@ -114,6 +114,10 @@ const likeComment = asyncHandler(async (req, res) => {
     res.status(200).json({likes:likesArray.length})
 })
 
+const getPostComments = asyncHandler(async (req, res)=>{
+    console.log("\n","Results\n",res.results)
+    res.json(res.results).status(200)
+})
 
 module.exports = {
     getComment,
@@ -121,5 +125,6 @@ module.exports = {
     createComment,
     deleteComment,
     updateComment,
-    likeComment
+    likeComment,
+    getPostComments
 }

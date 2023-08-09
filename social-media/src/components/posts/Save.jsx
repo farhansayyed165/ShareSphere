@@ -3,6 +3,7 @@ import { SavePost } from '../../api/postApi'
 import { useDispatch } from 'react-redux'
 import { Auth } from '../../features/userSlice'
 import { addUserDetailsPersist } from '../../utils/addUserDetailsPersist'
+import { FaRegBookmark, FaBookmark } from 'react-icons/fa'
 
 function Save({postId, setPostData, user, token}) {
   const dispatch = useDispatch()
@@ -21,7 +22,7 @@ function Save({postId, setPostData, user, token}) {
           })
         })
     }
-    const saveButtonText = user.saved?.includes(postId) ? "Remove from saved":"Save"
+    const saveButtonText = user.saved?.includes(postId) ? <FaRegBookmark/>:<FaBookmark/>
   return (
     <button onClick={handleSave}>{saveButtonText}</button>
   )
