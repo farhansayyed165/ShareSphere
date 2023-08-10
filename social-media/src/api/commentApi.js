@@ -30,7 +30,8 @@ export async function getCommentsPaginated(postId, p){
     console.log(postId)
     const page = p ? p : 1
     try {
-        const response = await fetch(`/api/comments/infiniteComments/${postId}?page=${page}&limit=5`) 
+        const response = await fetch(`/api/comments/infiniteComments/${postId}?page=${page}&limit=5`,{
+        }) 
         return response.json()
     }
     catch(e){

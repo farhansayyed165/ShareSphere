@@ -7,7 +7,7 @@ async function paginateModel(req, res, next){
         // console.log(page)
         const startIndex = (page-1) * limit
         const endIndex = page * limit
-        const results = {}
+        const results = {results:[]}
         if(startIndex>0){
             results.previous = {
                 page:page-1,
@@ -36,6 +36,7 @@ async function paginatedCommentModel(req, res, next){
         const limit = parseInt(req.query.limit)
         const page = parseInt(req.query.page)
         // console.log(page)
+        console.log("inside paginated comments")
         const startIndex = (page-1) * limit
         const endIndex = page * limit
         const results = {}
@@ -45,7 +46,7 @@ async function paginatedCommentModel(req, res, next){
                 limit: limit,
             }
         }
-        if(endIndex < await Post.countDocuments()){
+        if(endIndex < await Comment.countDocuments()){
             results.next = {
                 page:page+1,
                 limit:limit
@@ -54,8 +55,6 @@ async function paginatedCommentModel(req, res, next){
         try{
             results.results = await Comment.find({postId}).limit(limit).skip(startIndex).sort({likes:-1, updatedAt:-1}).exec();
             res.results = results
-            // results.results= await Post.find().limit(limit).skip(startIndex).sort({likes:-1, updatedAt:-1}).exec();
-            // res.paginatedResults = results
             next()
         }
         catch(e){

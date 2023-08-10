@@ -2,7 +2,8 @@ const express = require("express");
 const connectDb = require("./config/dbConnect");
 const errorHandler = require("./middleware/errorHandler");
 const validateToken = require("./middleware/validateToken");
-const CheckToken = require("./controllers/validateTokenController")
+const CheckToken = require("./controllers/validateTokenController");
+const { searchdb, searchSubmit } = require("./controllers/generalController");
 connectDb()
 
 const app = express();
@@ -24,6 +25,10 @@ app.use(express.json());
 app.use(errorHandler);
 
 app.get("/api/validateToken", validateToken,CheckToken)
+
+app.get("/api/search/:search", searchdb)
+
+app.get("/api/searchSubmit/:search", searchSubmit)
 
 app.use("/api/users", require("./routes/userRoute"))
 

@@ -3,18 +3,37 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { getCommentsPaginated } from '../../api/commentApi'
 import Comments from './Comments'
 
-function CommentInfScroll({ data }) {
-    const [comments, setComments] = useState()
-    const [next, setNext] = useState(comments?.next)
-    const [hasMore, setHasMore] = useState(comments?.next ? true : false)
+function CommentInfScroll({ data,commentsArray }) {
+    const [comments, setComments] = useState(commentsArray.results)
+    const [next, setNext] = useState(commentsArray?.next)
+    const [hasMore, setHasMore] = useState(commentsArray.next ? true:false)
 
-    useEffect(() => {
-        getCommentsPaginated(data._id)
-            .then(res => {
-                setComments(res.results)
-            })
-    }, [])
+    // useEffect(() => {
+    //     if(comments.length > 0){
+    //         return
+    //     }
+    //     getCommentsPaginated(data._id)
+    //         .then(res => {
+    //             const results = res.results
+    //             const next = res?.next
+    //             setComments(prev => {
+    //                 const newArray = prev.concat(results);
+    //                 console.log(newArray)
+    //                 return newArray
+    //             })
+    //             setNext(next);
+    //             setHasMore(next ? true : false)
+    //             console.log(comments)
+    //         })
+    //         return 
 
+    // }, [])
+    // let num = 0;
+    // useEffect(() => {
+    //     console.log(comments);
+    //     num++;
+    //     console.log("num", num);
+    // }, [comments])
     function fetchMore() {
         getCommentsPaginated(data._id, next?.page)
             .then(res => {
@@ -29,24 +48,28 @@ function CommentInfScroll({ data }) {
                 setHasMore(next ? true : false)
             })
     }
-    let commentsComponent = comments?.map((comment,id)=> {
+    console.log(comments)
+    const commentsComponent = comments ? comments.map((comment, id) => {
         return <Comments comment={comment} key={id} />
 
-    });
+    }) : <></>
     return (
-        <InfiniteScroll
-            dataLength={comments?.length - 1}
-            next={fetchMore}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            endMessage={
-                <p style={{ textAlign: 'center' }}>
-                    <b>Yay! You have seen it all</b>
-                </p>
-            }
-        >
-            {commentsComponent}
-        </InfiniteScroll>
+        <>
+
+            {comments && <InfiniteScroll
+                dataLength={comments?.length - 1}
+                next={fetchMore}
+                hasMore={hasMore}
+                loader={<h4>Loading...</h4>}
+                endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                        <b>Yay! You have seen it all</b>
+                    </p>
+                }
+            >
+                {commentsComponent}
+            </InfiniteScroll>}
+        </>
     )
 }
 

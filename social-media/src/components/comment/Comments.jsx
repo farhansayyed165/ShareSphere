@@ -10,14 +10,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Comments = ({ comment }) => {
     if (comment) {
-        const [commentData, setCommentData] = useState({ content: "", updatedAt: "", user: "", username: "", likes: [] })
-        useEffect(() => {
-            getComment(comment)
-                .then(res => {
-                    const { content, updatedAt, user, username, likes } = res.comment;
-                    setCommentData({ content, updatedAt, user, username, likes })
-                })
-        }, [])
+        const [commentData, setCommentData] = useState(comment)
+        // useEffect(() => {
+        //     getComment(comment)
+        //         .then(res => {
+        //             const { content, updatedAt, user, username, likes } = res.comment;
+        //             setCommentData({ content, updatedAt, user, username, likes })
+        //         })
+        // }, [])
         return (
             <div className=' relative border-1 my-5 p-1 '>
                 <GrMore className='absolute top-0 right-0 mx-2 my-1'></GrMore>

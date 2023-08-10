@@ -18,8 +18,8 @@ import { getCommentsPaginated } from '../api/commentApi';
 export async function loader({ params }) {
     const { postId } = params;
     const response = await getPost(postId)
-    // const comments = await getCommentsPaginated(response._id)
-    return response
+    const comments = await getCommentsPaginated(response._id)
+    return {response, comments}
 }
 
 
@@ -32,7 +32,7 @@ const Post = () => {
     //         })
     // }, [])
     const postId = useParams().postId
-    const [data, setData] = useState(useLoaderData())
+    const [data, setData] = useState(useLoaderData().response)
 
 
     const [cookies] = useCookies(['access-token'])
@@ -60,7 +60,7 @@ const Post = () => {
     return (
         <main className='w-full relative flex items-center justify-center border-2 h-screen -mt-5  bg-white'>
             <div className='w-full hidden md:flex md:w-10/12 border-2 max-h-[90vh]  bg-white shadow-lg'>
-                <div className='px-4 -mt-3 w-1/2 max-h-[90vh] overflow-scroll hide-scroll flex items-center'>
+                <div className='px-4 mt-2 w-1/2 max-h-[90vh] overflow-scroll hide-scroll flex items-center'>
                     {
                         <Carousel items={data.images} maxW={true} />
                     }
@@ -91,7 +91,7 @@ const Post = () => {
                     </div>
                     <div>
                         {createComponent}
-                        <CommentInfScroll data={data}></CommentInfScroll>
+                        <CommentInfScroll data={data} commentsArray={useLoaderData().comments}></CommentInfScroll>
                     </div>  
                 </div>
             </div>

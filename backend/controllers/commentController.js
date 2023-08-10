@@ -10,7 +10,7 @@ const getComment = asyncHandler(async (req, res) => {
         throw new Error("Can't find any Post")
     }
     const id = req.params.id
-    const comment = await Comment.findById(id);
+    const comment = await  Comment.findById(id);
     // console.log(comment)
     res.status(200).json({ comment })
 });

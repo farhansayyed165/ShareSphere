@@ -8,7 +8,7 @@ router.get("/", getComments);
 
 router.get("/:id", getComment);
 
-router.put("/infiniteComments/:id",paginatedCommentModel,getPostComments)
+router.get("/infiniteComments/:id",paginatedCommentModel,getPostComments)
 
 router.post("/createComment",validateToken, createComment);
 
