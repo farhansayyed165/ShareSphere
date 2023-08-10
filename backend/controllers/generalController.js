@@ -14,7 +14,7 @@ const searchdb = asyncHandler(async(req,res)=>{
     res.json(results).status(200)
 })
 
-const searchSubmit = asyncHandler(async(req,res)=>{
+const searchPosts = asyncHandler(async(req,res)=>{
     const searchString = req.params.search
     if(!searchString){
         res.status(404)
@@ -45,5 +45,9 @@ const searchSubmit = asyncHandler(async(req,res)=>{
     res.json(results).status(200)
 })
 
+const searchUsers = asyncHandler(async(req,res)=>{
+    res.json(res.results).status(200)
+})
 
-module.exports = {searchdb, searchSubmit}
+
+module.exports = {searchdb, searchUsers}

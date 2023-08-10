@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 export async function loader({params}){
   const {search} = params;
-  const response = await searchSubmit(search)
+  const response = await searchSubmit(search,1)
   return response
 }
 
