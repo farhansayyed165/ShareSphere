@@ -1,21 +1,116 @@
-import React, {useState} from 'react'
-import { useParams, useLoaderData } from 'react-router-dom'
-import { searchSubmit } from '../api/searchApi';
+import React, { useState } from 'react'
+import { useParams, useLoaderData, Link } from 'react-router-dom'
+import { searchUser, searchPosts } from '../api/searchApi';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import SmallPost from '../components/posts/SmallPost';
+import { useOutletContext } from "react-router-dom";
 
-export async function loader({params}){
-  const {search} = params;
-  const response = await searchSubmit(search,1)
-  return response
+export async function loader({ params }) {
+  const { search } = params;
+  const users = await searchUser(search, 1)
+  const posts = await searchPosts(search, 1)
+  return { users, posts }
 }
 
-
 function Search() {
-  const [searchData, setSearchData] = useState(useLoaderData())
-  const searchParams = useParams()
-  console.log(searchParams, searchData)
+  const Context  = useOutletContext()
+  console.log(Context)
+  const [userData, setUserData] = useState(useLoaderData().users.results)
+  const [postData, setPostData] = useState(useLoaderData().posts.results)
+  const posts = useLoaderData().posts
+  const users = useLoaderData().users
+  const [toggleSection, setToggleSection] = useState(false)
+  const [next, setNext] = useState({ users: users.next, posts: posts.next })
+  const [hasMore, setHasMore] = useState({ users: next.users ? true : false, posts: next.posts ? true : false })
+  const searchParams = useParams().search
+  console.log(searchParams, { userData, postData })
+
+  async function fetchMorePosts() {
+    const res = await searchPosts(searchParams, next.posts)
+    setPostData(prev => {
+      const newArray = prev.concat(res.results)
+      return newArray
+    })
+    setNext(prev => {
+      return {
+        ...prev,
+        posts: res.next
+      }
+    })
+    setHasMore(prev => ({
+      ...prev,
+      posts: res.next ? true : false
+    }))
+  }
+  async function fetchMoreUsers() {
+    const res = await searchUser(searchParams, next.users)
+    setUserData(prev => {
+      const newArray = prev.concat(res.results)
+      return newArray
+    })
+    setNext(prev => {
+      return {
+        ...prev,
+        users: res.next
+      }
+    })
+    setHasMore(prev => ({
+      ...prev,
+      users: res.next ? true : false
+    }))
+
+  }
   return (
-    <div>Hello There</div>
+    <>
+      <main className='mt-5 mx-auto w-9/10'>
+        <h1 className='text-lg font-semibold '>Search results for " {searchParams} "</h1>
+
+        <div className='flex justify-around mb-5'>
+          <Link className='searchToggle' onClick={() => { setToggleSection(false) }}>
+            <h2 className='text-center text-xl mb-2 font-[Karla]'>Users</h2>
+            <span className={`block h-[2px] w-full rounded-md ${toggleSection ? "border-[1px] border-gray-300" : "bg-main-orange"} transition-all duration-200 ease-in-out`}></span>
+          </Link>
+          <Link className='searchToggle' onClick={() => { setToggleSection(true) }}>
+            <h2 className='text-center text-xl mb-2 font-[Karla]'>Posts</h2>
+            <span className={`block h-[2px] w-full rounded-md ${toggleSection ? "bg-main-orange" : "border-[1px] border-gray-300"} transition-all duration-200 ease-in-out`}></span>
+          </Link>
+        </div>
+
+        {!toggleSection && <section className='flex'>
+          <InfiniteScroll
+            dataLength={userData.length - 1}
+            next={fetchMoreUsers}
+            hasMore={hasMore.users}
+            loader={<h4>Loading...</h4>}>
+            {userData.map((user, i) => {
+              return <Link className="" to={`/${user.username}`} key={i}>
+                <div className='flex my-9'>
+                  <img src={user.avatar} className=" w-20 rounded-full object-cover mr-4 shadow" alt="" />
+                  <div className=''>
+                    <h1 className='text-lg font-semibold'>{user.fullname}</h1>
+                    <p className='text-sm text-gray-400'>{user.username}</p>
+                    <p className=' tracking-wider'>{user?.subText ? user.subText : "Student - Computer Science"} </p>
+                  </div>
+                </div>
+              </Link>
+            })}
+          </InfiniteScroll>
+        </section>}
+
+
+        {toggleSection && <section className='flex items-center w-full justify-center'>
+          <InfiniteScroll
+            dataLength={postData.length - 1}
+            next={fetchMorePosts}
+            hasMore={hasMore.posts}
+            loader={<h4>Loading...</h4>}>
+            {postData.map((post, i) => {
+              return <SmallPost data={post} token={Context.token} user={Context}/>
+            })}
+          </InfiniteScroll>
+        </section>}
+      </main>
+    </>
   )
 }
 

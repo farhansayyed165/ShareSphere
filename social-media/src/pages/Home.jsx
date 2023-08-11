@@ -14,8 +14,8 @@ function Home() {
   const [cookies,setCookies] = useCookies(['access-token'])
   const token = cookies['access-token']
   const [posts, setPosts] = useState(useLoaderData().results)
-  const [next, setNext] = useState(useLoaderData().next)
-  const [hasMore, setHasMore] = useState(useLoaderData().next ? true : false)
+    const [next, setNext] = useState(useLoaderData().next)
+    const [hasMore, setHasMore] = useState(useLoaderData().next ? true : false)
   const navigate = useNavigate()
   const user = useSelector((state) => {
     const value = state.user.user ? state.user.user : state.user

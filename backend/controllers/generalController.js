@@ -9,7 +9,7 @@ const searchdb = asyncHandler(async(req,res)=>{
         res.status(404)
         throw new Error("Search is undefined")
     }
-    const results = await User.find({"fullname":{"$regex":searchString, "$options":"i"}}).select("_id fullname username email avatar").limit(5)
+    const results = await User.find({"fullname":{"$regex":searchString, "$options":"i"}}).select("fullname username avatar").limit(5)
     console.log(results)
     res.json(results).status(200)
 })

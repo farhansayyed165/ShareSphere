@@ -52,22 +52,22 @@ export default function Layout() {
         document.body.style.overflow = 'unset';
     }
 
-    
+
     return (
         <section >
-            {renderHeaders && <Headers open={openCreatePost} close={closeCreatePost} handleLogout={handleLogout} user={user} token={token} render={renderHeaderElements} setHamburg={setHamburg} hamburg={hamburg}/>}
+            {renderHeaders && <Headers open={openCreatePost} close={closeCreatePost} handleLogout={handleLogout} user={user} token={token} render={renderHeaderElements} setHamburg={setHamburg} hamburg={hamburg} />}
             {showCreate && <Submit close={closeCreatePost} />}
-            { <SliderNav 
-            open={openCreatePost} 
-            close={closeCreatePost} 
-            handleLogout={handleLogout} 
-            user={user} 
-            token={token} 
-            render={renderHeaderElements}
-            setHamburg={setHamburg}
-            hamburg={hamburg}
+            {<SliderNav
+                open={openCreatePost}
+                close={closeCreatePost}
+                handleLogout={handleLogout}
+                user={user}
+                token={token}
+                render={renderHeaderElements}
+                setHamburg={setHamburg}
+                hamburg={hamburg}
             />}
-            <Outlet />
+            <Outlet context={{ user, token }} />
         </section>
     )
 }

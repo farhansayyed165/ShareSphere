@@ -6,7 +6,7 @@ import { CgComment } from 'react-icons/cg'
 import { getUserById } from '../../api/userApi'
 import { timeSince } from '../../utils/parseDate'
 
-function SmallPost({ data, user, token, id }) {
+function SmallPost({ data, user, token }) {
 
   const [postUser, setPostUser] = useState()
   useEffect(() => {
@@ -19,7 +19,7 @@ function SmallPost({ data, user, token, id }) {
   const [postData, setPostData] = useState(data)
   const content = data.content ? (data.content.length > 200 ? data.content.substring(0, 200) + "..." : data.content) : ""
   return (
-    <div className='lg:w-[700px] md:w-[500px]  my-4 border-2 py-2 px-5 w-full z-40' id={id}>
+    <div className='lg:w-[700px] md:w-[500px]  my-4 border-2 py-2 px-5 w-full z-40' >
 
       <div className=''>
         {postUser ? <Link to={`/${postUser.username}`}>
@@ -36,13 +36,13 @@ function SmallPost({ data, user, token, id }) {
         </div>
 
         {
-          data.images.length > 0 ? <Carousel items={data.images} id={id} /> : <></>
+          data.images.length > 0 ? <Carousel items={data.images} /> : <></>
         }
         <div className='flex items-center justify-center '>
 
           <LikeButton token={token} login={user.login} postData={postData} setPostData={setPostData} postId={data._id} user={user}></LikeButton>
 
-          <div className="flex items-center justify-center mx-10 my-4"><CgComment /><p className='mx-2'>{data.comments.length}</p></div>
+          <div className="flex items-center justify-center mx-10 my-4"><CgComment /><p className='mx-2'>{data.comments?.length}</p></div>
         </div>
       </div>
 
