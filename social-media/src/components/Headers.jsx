@@ -9,6 +9,7 @@ import { searchBoxRecommend } from "../api/searchApi";
 
 
 export default function Headers({ render, hamburg, setHamburg }) {
+    const location = useLocation()
     const navigate = useNavigate()
     const [search, setSearch] = useState()
     const [searchContent, setSearchContent] = useState("")
@@ -42,7 +43,11 @@ export default function Headers({ render, hamburg, setHamburg }) {
     function handleSubmit(e){
         e.preventDefault()
         if(searchContent){
+            setSearchRecommend("")
             navigate(`/search/${searchContent}`)
+            if(location.pathname.split("/")[1]=="search"){
+                window.location.reload()
+            }
         }
     }
 
