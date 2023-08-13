@@ -44,10 +44,10 @@ export default function Headers({ render, hamburg, setHamburg }) {
         e.preventDefault()
         if(searchContent){
             setSearchRecommend("")
-            navigate(`/search/${searchContent}`)
             if(location.pathname.split("/")[1]=="search"){
                 window.location.reload()
             }
+            navigate(`/search/${searchContent}`)
         }
     }
 

@@ -13,6 +13,7 @@ import Auth from './components/Auth'
 import WillNotLoadIfLoggedIn from './components/NotRequired'
 import UsernameError from './components/error/UsernameError'
 import Search, {loader as searchLoader} from './pages/Search'
+import Settings, {loader as SettingsLoader} from './pages/Settings'
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -28,7 +29,9 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path=':search' element={<Search />} loader={searchLoader}/>
       </Route>
 
+
       <Route path=':username' element={<Profile />} errorElement={<UsernameError />} loader={profileLoader}></Route>
+      <Route path='settings' element={<Settings/>} loader={SettingsLoader}/>
       <Route element={<Auth />} >
         <Route path='submit' element={<Submit />} />
       </Route>
