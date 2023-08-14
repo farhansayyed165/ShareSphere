@@ -43,7 +43,7 @@ function NavDropDown({ user, handleLogout }) {
                     <Link to={`/${user.username}`}>
                         <span className="text-gray-700 block px-4 py-2 z-50 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">Profile</span>
                     </Link>
-                    <Link>
+                    <Link to={"/settings"}>
                         <span className="text-gray-700 block px-4 py-2 z-50 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">Settings</span>
                     </Link>
                         <button type="submit" className="text-gray-700 block w-[400px] px-4 py-2 text-left text-sm" onClick={handleLogout} role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button>

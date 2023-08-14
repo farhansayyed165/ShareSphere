@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import { updateUser } from '../../api/userApi';
 import {ImCross} from 'react-icons/im'
 
-function EditProfile({ showEdit, data, token, setOff }) {
+function 
+EditProfile({ showEdit, data, token, setOff }) {
     const nameRef = useRef()
     useEffect(()=>{
         nameRef.current.focus()

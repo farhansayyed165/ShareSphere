@@ -7,6 +7,40 @@
     scrollbar-width: thin;
 }
 
+@media (max-width:640px){
+    body{
+        overflow-x: hidden ;
+    }
+}
+
+.avatar{
+    width: 4rem;
+    border-radius: 9999px;
+}
+
+.avatar-text{
+    opacity: 0;
+    transition: all 300ms;
+}
+.avatar:hover>.avatar-text {
+    opacity: 1;
+}
+.avatar:hover:after {
+    opacity: 1;
+}
+.avatar:after {
+    content: '';
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 9999px;
+    top:0;
+    background:rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: all 300ms;
+    -webkit-transition: all 300ms;
+}
+
 .hide-scroll{
     scrollbar-width: none;
 }
