@@ -4,8 +4,12 @@ import { useOutletContext, Link } from 'react-router-dom'
 import { getUser } from '../api/userApi'
 import { useState } from 'react'
 import EditProfile from '../components/user/editProfile'
-
-
+import EditAvatar from '../components/user/editAvatar'
+import { updateUser } from '../api/userApi'
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { useDispatch } from 'react-redux'
+import { Auth } from "../features/userSlice"
+import { checkPassword } from '../api/userApi'
 
 export function loader(e) {
   return e
@@ -13,18 +17,24 @@ export function loader(e) {
 
 function Settings() {
   const user = useOutletContext().user
-  const token = useOutletContext().token
+  const dispatch = useDispatch()
+
   const [userData, setUserData] = useState("")
   const [editData, setEditData] = useState()
   const [passwords, setPasswords] = useState({ current: "", new: "", confirm: "" })
   const [sections, setSections] = useState({ profile: true, account: false, sub: false })
+  const [avatar, setAvatar] = useState()
+
+  const [loading, setLoading] = useState(false)
+
   const checkbox = useRef()
+
   useEffect(() => {
     getUser(user.username)
       .then(res => {
-        console.log(res)
         setUserData(res)
         setEditData(res)
+        setAvatar(res.avatar)
       })
   }, [])
 
@@ -37,7 +47,43 @@ function Settings() {
     })
     )
   }
-  function handleSubmit(e) {
+
+  async function uploadImage() {
+    if (avatar == editData.avatar) {
+      return editData
+    }
+    const imageData = new FormData();
+    imageData.append("file", avatar)
+    imageData.append("upload_preset", "o1hlhhqo");
+    const response = await fetch(
+      'https://api.cloudinary.com/v1_1/drqdgsnat/image/upload', {
+      method: 'POST',
+      body: imageData
+    })
+    const data = await response.json()
+    const formData = {
+      ...editData,
+      avatar: data.secure_url
+    }
+    return Promise.resolve(formData)
+  }
+
+  const token = useOutletContext().token
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    console.log("inside submit")
+    setLoading(true)
+    const data = await uploadImage()
+    delete data.password
+    const response = await updateUser(data, token)
+    const { fullname, email, password, avatar, gender, username, _id, following, followers, saved } = response;
+    dispatch(Auth({ fullname, email, password, avatar, username, _id, gender, followers, following, saved, login: true }));
+    console.log(response)
+    setLoading(false)
+    window.location.reload()
+
+
 
   }
   function handlePasswordChange(e) {
@@ -51,7 +97,15 @@ function Settings() {
   }
 
   function handlePasswordSubmit(e) {
-
+    e.preventDefault()
+    if(passwords.new == passwords.confirm && passwords.current){
+      const data = {email:userData.email, password:passwords.current}
+      checkPassword(data, token)
+      .then(res=>{
+        console.log(res)
+      }
+      )
+    }
   }
 
   function profileChange(e) {
@@ -76,7 +130,7 @@ function Settings() {
         {/* NAV */}
         <section className='w-[90%] flex flex-col items-start'>
           <nav className='font-[karla] text-xl flex w-[90%] mt-4'>
-            <div className={` ${sections.profile ? "bottom-shadow" : ""}  mx-5 searchToggle text-center cursor-pointer transition-all duration-150 `} name="profile" onClick={profileChange}>
+            <div className={` ${sections.profile ? "bottom-shadow" : ""}  mx-6 searchToggle text-center cursor-pointer transition-all duration-150 `} name="profile" onClick={profileChange}>
               <h1>Profile</h1>
               <span className={`block h-[2px] mt-1 ${sections.profile ? "bg-main-orange" : ""} w-full rounded-md transition-all duration-200 ease-in-out`}></span>
             </div>
@@ -98,6 +152,12 @@ function Settings() {
                 <div className='my-7'>
                   <h3 className='font-semibold text-lg mb-2'>Name</h3>
                   <h4>{userData?.fullname}</h4>
+                </div>
+                <div className='my-7'>
+                  <h3 className='font-semibold text-lg mb-2'>Username</h3>
+                  <h4>
+                    {userData?.username}
+                  </h4>
                 </div>
                 <div className='my-7'>
                   <h3 className='font-semibold text-lg mb-2'>Email Address </h3>
@@ -125,7 +185,7 @@ function Settings() {
                 <div className='mb-8 flex justify-between items-center  w-full sm:w-2/3'>
                   <p className="font-semibold text-lg ">Private my account</p>
                   <div>
-                    <input type="checkbox" value="" classname="hidden absolute w-0 overflow-hidden" ref={checkbox} style={{ display: "none" }} />
+                    <input type="checkbox" value="" className="sr-only" ref={checkbox} />
                     <div onClick={handleToggleCheckbox} className={`h-[40px] ${checkbox.current?.checked ? "bg-orange-500" : "bg-main-orange "} transition-all duration-[250ms] w-[90px] shadow-inner shadow-md flex items-center p-0.5 rounded-3xl relative`}>
                       <div className={`${checkbox.current?.checked ? "translate-x-[52px]" : ""} mx-[2px] transition-all duration-300 w-[30px] p-1 h-[80%] bg-white rounded-full absolute shadow-lg`}></div>
                     </div>
@@ -135,12 +195,9 @@ function Settings() {
                 {/* EDIT FORM */}
                 <h2 className='text-xl font-[Karla] '>Edit</h2>
                 <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-400 sm:w-2/3 w-full  rounded"></hr>
-                <form className="w-2/3 mb-10" onSubmit={handleSubmit}>
+                <form className="sm:w-2/3 w-full mb-10" onSubmit={handleSubmit}>
                   <div className='flex flex-col items-center pr-6  mb-2 relative'>
-                    <div className='avatar cursor-pointer'>
-                      <img src={userData.avatar} className="w-16 rounded-full" alt="" />
-                      <p className='absolute top-0 mt-7 text-white z-10 text-center avatar-text w-16'>Change</p>
-                    </div>
+                    <EditAvatar data={editData?.avatar} avatar={avatar} setAvatar={setAvatar}></EditAvatar>
                     <p className=''>Avatar</p>
                   </div>
                   <p className='mt-2 mb-0'>Name</p>
@@ -160,13 +217,13 @@ function Settings() {
                     <option value="prefer not to answer" className='font-Karla'>Perfer not to Answer</option>
                   </select>
 
-                  <button type='submit' className=' bg-main-orange text-white font-[Karla] text-xl rounded-md p-2 '>Save</button>
+                  <button type='submit' className={`bg-main-orange text-white font-[Karla] text-xl rounded-md p-2 ${loading ? " pointer-events-none" : ""} `}>{loading ? <AiOutlineLoading3Quarters className='rotating' /> : "Save"}</button>
                 </form>
 
                 {/* CHANGE PASSWORD  */}
                 <h2 className='text-xl font-[Karla] '>Change Password</h2>
                 <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-400 sm:w-2/3 w-full  rounded"></hr>
-                <form classname="w-2/3" style={{ width: "66.66666%" }}>
+                <form className="w-full sm:w-2/3 " onSubmit={handlePasswordSubmit}>
                   <p className='mt-2 mb-0'>Current Password</p>
                   <input type="password" name="current" placeholder='Current Password' className='w-full my-0 mb-5' value={passwords.current} onChange={handlePasswordChange} />
                   <p className='mt-2 mb-0'>New Password</p>

@@ -82,7 +82,7 @@ const Submit = ({ close }) => {
         setFormData(prev => ({ ...prev, images: images }))
         const form = {
             ...formData,
-            images
+            images 
         }
         console.log("done pushing images in formData ", formData)
         return Promise.resolve(form)

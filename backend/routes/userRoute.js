@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const {createUser, loginUser, updateUser, deleteUser, viewProfileUsername, followUserHandler, checkIfAllIsOK, viewProfileId} = require("../controllers/userController")
+const {createUser, loginUser, updateUser, deleteUser, viewProfileUsername, followUserHandler, checkIfAllIsOK, viewProfileId, checkPassword} = require("../controllers/userController")
 const validateToken = require("../middleware/validateToken");
 
 router.post("/signup", createUser); //POST
 
 router.post("/login", loginUser); //POST
+
+router.post("/check-password",validateToken, checkPassword)
 
 router.get("/profile/:username", viewProfileUsername); //GET
 
