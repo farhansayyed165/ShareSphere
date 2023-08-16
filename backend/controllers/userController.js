@@ -76,7 +76,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
 const checkPassword = asyncHandler(async (req, res) => {
     // Extracting and Checking if the email and passwords exist
-    const { email, password } = req.body;
+    const { email, password, newPassword } = req.body;
     // if any on of it doesn't exist, we throw an error and add return a status of 400
     if (!email || !password) {
         res.status(400);
@@ -87,21 +87,26 @@ const checkPassword = asyncHandler(async (req, res) => {
     // The following lines are checking if the email exists
     const user = await User.findOne({ email });
     // const hashedPassword = await bcrypt.hash(password, 10);
-    // const updatedUser = await User.findByIdAndUpdate(
-    //     user._id,
-    //     {password:hashedPassword},
-    //     { new: true }
-    // );
-    console.log(user)
+    // console.log(user)
     if(!user){
         res.status(404)
         throw new Error("account not found")
     }
-
+    console.log(password, user.password)
     if(await bcrypt.compare(password, user.password)){
-        res.status(200).json({message:"ok"})
+        const hashedPassword = await bcrypt.hash(newPassword, 10);        
+        const updatedUser = await User.findByIdAndUpdate(
+            user._id,
+            {password:hashedPassword},
+            { new: true }
+        );
+        res.json(updatedUser).status(200)
     }
-    // res.status(200).json({a:"good"})
+    else{
+        res.status(401)
+        throw new Error("passwords don't match")
+    }
+
 
 })
 

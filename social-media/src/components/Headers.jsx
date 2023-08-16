@@ -59,7 +59,7 @@ export default function Headers({ render, hamburg, setHamburg }) {
         <>
             <header className="sticky w-full top-0 z-50 shadow-md bg-white ">
                 <nav className="flex items-center justify-evenly px-4 sm:py-[2px] shadow-black-sm lg:px-8 sticky top-0 border-b-2 py-3" aria-label="Global">
-                    <Link className="site-logo flex justify-self-start" to={"/"}><h1 className=" text-lg font-semibold hover:text-teal-700">Socu</h1></Link>
+                    <Link className="site-logo flex justify-self-start" to={"/"}><h1 className=" text-lg font-semibold hover:text-teal-700">ShareSphere</h1></Link>
                     <form onSubmit={handleSubmit} className="absolute  text-gray-600 sm:flex sm:relative  items-center sm:justify-self-center justify-center hidden" >
                         <input
                             className="border-2 border-gray-300 bg-white h-10 pl-2 pr-8 rounded-lg text-sm focus:outline-none"

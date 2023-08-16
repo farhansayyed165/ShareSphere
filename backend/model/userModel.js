@@ -38,6 +38,10 @@ const userSchema = mongoose.Schema({
         type:String,
         default:null
     },
+    private:{
+        type:Boolean,
+        default:false
+    },
     saved:[{
         type: mongoose.Types.ObjectId,
         ref:"post"

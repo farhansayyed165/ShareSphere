@@ -10,6 +10,9 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { useDispatch } from 'react-redux'
 import { Auth } from "../features/userSlice"
 import { checkPassword } from '../api/userApi'
+import {ReactComponent as ComingSoon} from "../assets/coming_soon.svg"
+import PrivateAccount from '../components/PrivateAccount'
+import { deleteUser } from '../api/userApi'
 
 export function loader(e) {
   return e
@@ -27,7 +30,7 @@ function Settings() {
 
   const [loading, setLoading] = useState(false)
 
-  const checkbox = useRef()
+
 
   useEffect(() => {
     getUser(user.username)
@@ -98,47 +101,62 @@ function Settings() {
 
   function handlePasswordSubmit(e) {
     e.preventDefault()
+    setLoading(true)
     if(passwords.new == passwords.confirm && passwords.current){
-      const data = {email:userData.email, password:passwords.current}
+      const data = {email:userData.email, password:passwords.current, newPassword:passwords.new}
       checkPassword(data, token)
       .then(res=>{
+        const { fullname, email, password, avatar, gender, username, _id, following, followers, saved } = res;
+        dispatch(Auth({ fullname, email, password, avatar, username, _id, gender, followers, following, saved, login: true }));
         console.log(res)
+        setLoading(false)
+        window.location.reload()
       }
       )
     }
   }
 
+  const sub = useRef()
+  const profile = useRef()
+  const account = useRef()
+
+
   function profileChange(e) {
+    profile.current.scrollIntoView({behavior:"smooth"})
     setSections({ profile: true, account: false, sub: false })
   }
   function accountChange(e) {
+    account.current.scrollIntoView({behavior:"smooth"})
     setSections({ profile: false, account: true, sub: false })
   }
   function subChange(e) {
+    sub.current.scrollIntoView({behavior:"smooth"})
     setSections({ profile: false, account: false, sub: true })
   }
-  function handleToggleCheckbox() {
-    checkbox.current.checked = !checkbox.current.checked
-    setSections({ profile: false, account: true, sub: false })
-    console.log(checkbox.current.checked)
+
+
+  function deleteAccount(e){
+    e.preventDefault()
+    deleteUser(userData, token)
+    .then()
+
   }
-  // console.log(editData)
   return (
     <>
 
       <main className='w-full flex flex-col items-center'>
         {/* NAV */}
         <section className='w-[90%] flex flex-col items-start'>
-          <nav className='font-[karla] text-xl flex w-[90%] mt-4'>
-            <div className={` ${sections.profile ? "bottom-shadow" : ""}  mx-6 searchToggle text-center cursor-pointer transition-all duration-150 `} name="profile" onClick={profileChange}>
+          <nav className='font-[karla] text-xl flex w-[90%] mt-4 overflow-scroll [scrollbar-width:none] pb-2'>
+            <div ref={profile} className={` ${sections.profile ? "bottom-shadow" : ""}  mx-6 searchToggle text-center cursor-pointer transition-all duration-150 `} name="profile" onClick={profileChange}>
               <h1>Profile</h1>
               <span className={`block h-[2px] mt-1 ${sections.profile ? "bg-main-orange" : ""} w-full rounded-md transition-all duration-200 ease-in-out`}></span>
             </div>
-            <div className={`${sections.account ? "bottom-shadow" : ""} mx-5  searchToggle text-center cursor-pointer transition-all duration-150 `} name="account" onClick={accountChange}>
+            <div ref={account} className={`${sections.account ? "bottom-shadow" : ""} mx-5  searchToggle text-center cursor-pointer transition-all duration-150 `} name="account" onClick={accountChange}>
               <h1>Account</h1>
               <span className={`block h-[2px] mt-1 ${sections.account ? "bg-main-orange" : ""} w-full rounded-md transition-all duration-200 ease-in-out`}></span>
             </div>
-            <div className={` ${sections.sub ? "bottom-shadow" : ""} mx-5  searchToggle text-center cursor-pointer  transition-all duration-150`} name="sub" onClick={subChange}>
+            <div ref={sub} className={` ${sections.sub ? "bottom-shadow" : ""} mx-5  searchToggle text-center cursor-pointer  transition-all duration-150`} name="sub" onClick={subChange}>
               <h1>Subscription</h1>
               <span className={`block h-[2px] mt-1 ${sections.sub ? "bg-main-orange" : ""} w-full rounded-md  transition-all duration-200 ease-in-out`}></span>
             </div>
@@ -182,21 +200,13 @@ function Settings() {
                 <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-700 rounded"></hr>
 
                 {/* PRIVATE ACCOUNT */}
-                <div className='mb-8 flex justify-between items-center  w-full sm:w-2/3'>
-                  <p className="font-semibold text-lg ">Private my account</p>
-                  <div>
-                    <input type="checkbox" value="" className="sr-only" ref={checkbox} />
-                    <div onClick={handleToggleCheckbox} className={`h-[40px] ${checkbox.current?.checked ? "bg-orange-500" : "bg-main-orange "} transition-all duration-[250ms] w-[90px] shadow-inner shadow-md flex items-center p-0.5 rounded-3xl relative`}>
-                      <div className={`${checkbox.current?.checked ? "translate-x-[52px]" : ""} mx-[2px] transition-all duration-300 w-[30px] p-1 h-[80%] bg-white rounded-full absolute shadow-lg`}></div>
-                    </div>
-                  </div>
-                </div>
+                  <PrivateAccount user={userData} setSections={setSections}/>
 
                 {/* EDIT FORM */}
                 <h2 className='text-xl font-[Karla] '>Edit</h2>
                 <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-400 sm:w-2/3 w-full  rounded"></hr>
                 <form className="sm:w-2/3 w-full mb-10" onSubmit={handleSubmit}>
-                  <div className='flex flex-col items-center pr-6  mb-2 relative'>
+                  <div className='flex flex-col items-center mb-2 relative'>
                     <EditAvatar data={editData?.avatar} avatar={avatar} setAvatar={setAvatar}></EditAvatar>
                     <p className=''>Avatar</p>
                   </div>
@@ -237,10 +247,15 @@ function Settings() {
                 <h2 className='text-xl font-[Karla] mt-10'>Delete</h2>
                 <hr className="h-px mb-5 mt-2 bg-red-400 border-0 sm:w-2/3 w-full  rounded"></hr>
 
-                <button type='button' className="bg-red-500 text-white block p-2 mb-9 rounded font-bold text-lg uppercase font-[Karla]">Delete Account</button>
+                <button type='button' className="bg-red-500 text-white block p-2 mb-9 rounded font-bold text-lg uppercase font-[Karla]" onClick={deleteAccount}>Delete Account</button>
               </div>
             }
-            {sections.profile && <form ></form>}
+            {sections.sub && 
+            <div className='w-full h-screen flex flex-col items-center justify-start relative'>
+              <ComingSoon className=" md:w-1/2 md:h-auto   w-[80%] h-auto object-top"></ComingSoon>
+              <h1 className='text-center font-[Karla] lg:text-3xl md:text-xl text-lg mt-2'>This Feature is Coming Soon!</h1>
+            </div>
+            }
           </section>
         </section>
       </main>
