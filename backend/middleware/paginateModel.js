@@ -57,6 +57,7 @@ function paginatedSearch(model, q, selectedFields) {
         try {
             results.results = await model.find({[q]: { "$regex": searchString, "$options": "i" } }).select(selectedFields).limit(limit).skip(startIndex).exec()
             res.results = results
+            console.log(results)
             next()
         }
         catch (e) {

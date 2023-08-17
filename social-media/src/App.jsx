@@ -12,7 +12,7 @@ import Post, { loader as PostLoader } from './pages/Post'
 import Auth from './components/Auth'
 import WillNotLoadIfLoggedIn from './components/NotRequired'
 import UsernameError from './components/error/UsernameError'
-import Search, {loader as searchLoader} from './pages/Search'
+import Search from './pages/Search'
 import Settings, {loader as SettingsLoader} from './pages/Settings'
 
 
@@ -26,7 +26,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       </Route>
 
       <Route path='search'>
-        <Route path=':search' element={<Search />} loader={searchLoader}/>
+        <Route path=':search' element={<Search />} />
       </Route>
 
 

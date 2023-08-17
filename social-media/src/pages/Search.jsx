@@ -1,29 +1,40 @@
-import React, { useState } from 'react'
-import { useParams, useLoaderData, Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useParams, Link } from 'react-router-dom'
 import { searchUser, searchPosts } from '../api/searchApi';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SmallPost from '../components/posts/SmallPost';
 import { useOutletContext } from "react-router-dom";
 
-export async function loader({ params }) {
-  const { search } = params;
-  const users = await searchUser(search, 1)
-  const posts = await searchPosts(search, 1)
-  return { users, posts }
-}
+
 
 function Search() {
   const Context  = useOutletContext()
-  console.log(Context)
-  const [userData, setUserData] = useState(useLoaderData().users.results)
-  const [postData, setPostData] = useState(useLoaderData().posts.results)
-  const posts = useLoaderData().posts
-  const users = useLoaderData().users
+  const [userData, setUserData] = useState([])
+  const [postData, setPostData] = useState([])
   const [toggleSection, setToggleSection] = useState(false)
-  const [next, setNext] = useState({ users: users.next, posts: posts.next })
-  const [hasMore, setHasMore] = useState({ users: next.users ? true : false, posts: next.posts ? true : false })
+  const [next, setNext] = useState()
+  const [hasMore, setHasMore] = useState()
   const searchParams = useParams().search
-  console.log(searchParams, { userData, postData })
+  console.log("Search\n", searchParams)
+
+    useEffect(() => {
+      searchUser(searchParams, 1)
+      .then(userList=>{
+          setUserData(userList.results)
+          setNext(prev=>({...prev,users:userList.next}))
+          setHasMore(prev=>({...prev,users:userList.next ? true:false, }))
+      })
+      searchPosts(searchParams, 1)
+      .then(postList=>{
+          setPostData(postList.results)
+          setNext(prev=>({...prev, posts:postList.next}))
+          setHasMore(prev=>({...prev,posts:postList.next ? true:false}))
+      })
+    }, [])
+
+  console.log("user",userData)
+  console.log("post",postData)
+
 
   async function fetchMorePosts() {
     const res = await searchPosts(searchParams, next.posts)
@@ -60,6 +71,7 @@ function Search() {
     }))
 
   }
+
   return (
     <>
       <main className='mt-5 mx-auto w-9/10'>
@@ -75,14 +87,14 @@ function Search() {
             <span className={`block h-[2px] w-full rounded-md ${toggleSection ? "bg-main-orange" : "border-[1px] border-gray-300"} transition-all duration-200 ease-in-out`}></span>
           </Link>
         </div>
-
+        
         {!toggleSection && <section className='flex'>
           <InfiniteScroll
-            dataLength={userData.length - 1}
+            dataLength={userData?.length - 1}
             next={fetchMoreUsers}
-            hasMore={hasMore.users}
+            hasMore={hasMore?.users ? true:false}
             loader={<h4>Loading...</h4>}>
-            {userData.map((user, i) => {
+            {userData ? userData?.map((user, i) => {
               return <Link className="" to={`/${user.username}`} key={i}>
                 <div className='flex my-9'>
                   <img src={user.avatar} className=" w-20 rounded-full object-cover mr-4 shadow" alt="" />
@@ -93,18 +105,18 @@ function Search() {
                   </div>
                 </div>
               </Link>
-            })}
+            }):<></>}
           </InfiniteScroll>
         </section>}
 
 
         {toggleSection && <section className='flex items-center w-full justify-center'>
           <InfiniteScroll
-            dataLength={postData.length - 1}
+            dataLength={postData?.length - 1}
             next={fetchMorePosts}
-            hasMore={hasMore.posts}
+            hasMore={hasMore?.posts ? true:false}
             loader={<h4>Loading...</h4>}>
-            {postData.map((post, i) => {
+            {postData?.map((post, i) => {
               return <SmallPost data={post} token={Context.token} user={Context}/>
             })}
           </InfiniteScroll>

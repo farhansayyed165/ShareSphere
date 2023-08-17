@@ -40,7 +40,7 @@ function Home() {
       })
   }
   return (
-    <div className='flex items-center justify-center text-center'>
+    <div className='flex items-center justify-center text-center bg-slate-100'>
       {/* <div className='w-full'>
         <h1 className=''>Home</h1>
         
