@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 
 const createUser = asyncHandler(async (req, res, next) => {
     // Extracting and Checking if the email and passwords exist
-    const { fullname, email, password, gender, username } = req.body;
+    const { fullname, email, password, gender, username, subText, about } = req.body;
     // if any on of it doesn't exist, we throw an error and add return a status of 400
     if (!email || !password || !fullname || !gender || !username) {
         res.status(400);
@@ -31,6 +31,8 @@ const createUser = asyncHandler(async (req, res, next) => {
         password: hashedPassword,
         fullname,
         gender,
+        about,
+        subText
     })
 
     if (newUser) {

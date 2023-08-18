@@ -7,7 +7,11 @@ export default {
   theme: {
 
     extend: {
-      maxWidth:{
+      fontSize:{
+        pClamp:"clamp(0.4rem, 3vw, 0.8rem)",
+        h1Clamp:"clamp(1.25rem, 10vw, 4rem)",
+      }
+      ,maxWidth:{
         '1/4':'25%',
         '1/2':'50%',
         '3/4':'75%',

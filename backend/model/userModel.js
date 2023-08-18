@@ -21,6 +21,14 @@ const userSchema = mongoose.Schema({
         unique:true,
         trim:true,
     },
+    subtext:{
+        text:String,
+
+    },
+    about:{
+        text:String,
+        
+    },
     password:{
         type:String,
         required:true,
@@ -34,13 +42,13 @@ const userSchema = mongoose.Schema({
         enum:["male","female","other","non-binary","perfer not to answer"],
         default:"perfer not to answer"
     },
-    mobile:{
-        type:String,
-        default:null
-    },
     private:{
         type:Boolean,
         default:false
+    },
+    mobile:{
+        type:String,
+        default:null
     },
     saved:[{
         type: mongoose.Types.ObjectId,
