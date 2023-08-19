@@ -21,13 +21,13 @@ const userSchema = mongoose.Schema({
         unique:true,
         trim:true,
     },
-    subtext:{
-        text:String,
-
+    subText:{
+        type:String,
+        maxlength:400
     },
     about:{
-        text:String,
-        
+        type:String,
+        maxlength:2000
     },
     password:{
         type:String,

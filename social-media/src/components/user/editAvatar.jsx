@@ -23,9 +23,11 @@ function EditAvatar({data, avatar, setAvatar, dimensions}) {
     }
     return (
         <>
-        <div className='avatar cursor-pointer' onClick={handleAvatarModal}>
-          <img src={avatarLink} className={`${dimensions ? `w-${dimensions} h-${dimensions}`:"w-16 h-16"} rounded-full shadow-md object-cover mb-0`} alt="" />
-          <p className='absolute top-0 mt-7 text-white z-10 text-center avatar-text w-16'>Change</p>
+        <div className='avatar cursor-pointer w-[120px]' onClick={handleAvatarModal}>
+          <img src={avatarLink} className={`${dimensions ? `w-[${dimensions}] h-[${dimensions}]`:"w-[120px] h-[120px]"} rounded-full shadow-md object-cover mb-0`} alt="" />
+          <span className='absolute top-0  text-white z-10 text-center avatar-text w=[120px] h-[120px] flex items-center'>
+          <p className=' w-[120px] shadow-xl text-pClamp'>Click here to change the image</p>
+          </span>
         </div> 
         <input type="file" className='sr-only' onChange={handleAvatarChange} ref={inputFeild} />
         </>

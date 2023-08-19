@@ -30,7 +30,7 @@ export default function Layout() {
     )
     const loggedInNavElements = (
         <>
-            <button onClick={openCreatePost} title="Create a Post" className=" hidden bg-transperant text-black  border-main-orange border-2 font-bold p-2 mt-1 m-0 rounded sm:flex items-center justify-center text-xl "><GrAdd /></button>
+            <button onClick={openCreatePost} title="Create a Post" className=" hidden bg-transperant text-black  bg-main-orange font-bold p-2  m-0 rounded sm:flex items-center justify-center text-xl "><GrAdd /></button>
             <NavDropDown user={user} handleLogout={handleLogout} />
         </>
     )

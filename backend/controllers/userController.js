@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 
 const createUser = asyncHandler(async (req, res, next) => {
     // Extracting and Checking if the email and passwords exist
-    const { fullname, email, password, gender, username, subText, about } = req.body;
+    const { fullname, avatar, email, password, gender, username, subText, about } = req.body;
     // if any on of it doesn't exist, we throw an error and add return a status of 400
     if (!email || !password || !fullname || !gender || !username) {
         res.status(400);
@@ -26,14 +26,16 @@ const createUser = asyncHandler(async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log("Hashed Password: ", hashedPassword);
     const newUser = await User.create({
+        fullname,
         username,
         email,
-        password: hashedPassword,
-        fullname,
-        gender,
         about,
-        subText
+        subText,
+        password: hashedPassword,
+        avatar,
+        gender
     })
+    console.log(newUser)
 
     if (newUser) {
         res.status(201).json({ message: "User Created Succefully", user: newUser })

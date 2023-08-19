@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from '../components/uploadImage';
 import { submitPost } from '../api/postApi';
 import { useCookies } from 'react-cookie';
@@ -12,14 +12,14 @@ const Submit = ({ close }) => {
     const [buttonStyle, setButtonStyle] = useState("black")
     //pass these through a component that manages images for our post 
     const [img, setImg] = useState([]);
-    const [images, setImages] = useState([])
+    const [upload, setUpload] = useState({uploading:false, done:false})
     //setting up form data with images array empty for now
     const [formData, setFormData] = useState({
-        title: "",
         content: "",
         images: [],
     });
 
+    const formRef = useRef()
 
 
 
@@ -30,24 +30,35 @@ const Submit = ({ close }) => {
             ...prev,
             [name]: value
         }));
-    }
+        if(formData.content){
+            formRef.current ? formRef.current[0].style.border = "3px solid #9ca3af":""
+        }
+    }  
 
     // this function will call the send a request to our backend 
     // and redirect the user to Home page for now
     function handleSubmit(e) {
         e.preventDefault();
-        // calling the function 
+        if(!formData.content){
+            formRef.current ? formRef.current[0].style.border = "3px solid red":""
+            formRef.current ? formRef.current[0].focus():""
+            return
+        }
+        setUpload(prev=>({...prev, uploading:true}))
         uploadImages()
             .then((form) => {
-                console.log("this is form data before submitting", formData, "\n", form)
                 submitPost(form, token)
                     .then((response) => {
-                        console.log("end with this", response)
+                        setUpload({uploading:false, done:true})
                         navigate(`/posts/${response._id}`)
+                        setTimeout(()=>{
+                            setUpload({uploading:false, done:false})
+                            close()
+                        },400)
                     })
             })
+        
     }
-
 
     //this function will loop through the images uploaded by user,
     // upload them to cloudinary
@@ -55,7 +66,9 @@ const Submit = ({ close }) => {
     async function uploadImages() {
         //initializing empty array
         const images = []
-        console.log("this should happen first")
+        if(!img){
+            return formData
+        }
         // using for loop after trying .map and forEach
         for (let i = 0; i < img.length; i++) {
             console.log("in loop")
@@ -71,12 +84,9 @@ const Submit = ({ close }) => {
             const data = await response.json()
             console.log(data.secure_url)
             //storing the url in our array
-            console.log("pushing images");
             images.push(data.secure_url)
 
         }
-        console.log("done uploading images") //for debugging
-        console.log(images)
 
         // this setFormData does not work 
         setFormData(prev => ({ ...prev, images: images }))
@@ -84,31 +94,25 @@ const Submit = ({ close }) => {
             ...formData,
             images 
         }
-        console.log("done pushing images in formData ", formData)
         return Promise.resolve(form)
     }
 
 
     return (
         <div className='w-full absolute z-50 h-full bg-black/70 overflow-scroll'>
+            {<span className={`absolute ${(upload.done || upload.uploading) ? "top-0":"-top-20"} transition-all duration-200 ease-in-out w-full flex justify-center`}>
+                <p className={`text-white  p-1 px-5 border-2 ${upload.done ? " bg-green-500 border-green-800":"bg-main-orange border-darker-orange"} uppercase font-[Karla] text-lg font-semibold `}>{upload.done ? "DONE!":"Uploading Post!"}</p>
+            </span>}
             <div className='flex items-center justify-center mt-3 w-full '>
                 <div className='w-3/4 md:w-1/2  bg-white border-2 border-slate-400 p-8 shadow-md'>
                     <h2>Create Post</h2>
                     <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-700 rounded"></hr>
-                    <form onSubmit={handleSubmit}  >
-                        <input
-                            type="text"
-                            name='title'
-                            placeholder='Title'
-                            onChange={handleChange}
-                            value={formData.title}
-                            className='w-full border-gray-400 p-2 border-2 rounded mb-4 '
-                        />
+                    <form onSubmit={handleSubmit} ref={formRef} >
                         <textarea
                             id='content'
                             type="text"
                             name='content'
-                            placeholder='Body'
+                            placeholder='Caption'
                             rows={4}
                             onChange={handleChange}
                             value={formData.content}

@@ -206,7 +206,7 @@ function Settings() {
                 <h2 className='text-xl font-[Karla] '>Edit</h2>
                 <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-400 sm:w-2/3 w-full  rounded"></hr>
                 <form className="sm:w-2/3 w-full mb-10" onSubmit={handleSubmit}>
-                  <div className='flex flex-col items-center mb-2 relative'>
+                  <div className='flex flex-col items-center mb-2 relative w-full'>
                     <EditAvatar data={editData?.avatar} avatar={avatar} setAvatar={setAvatar}></EditAvatar>
                     <p className=''>Avatar</p>
                   </div>

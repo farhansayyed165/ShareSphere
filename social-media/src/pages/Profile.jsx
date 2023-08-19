@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUser } from '../api/userApi';
 import { useCookies } from 'react-cookie';
-import { useLoaderData } from 'react-router-dom';
-
+import { useLoaderData,useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import FollowComponent from '../components/user/Follow';
 import ProfilePosts from '../components/posts/ProfilePosts';
@@ -21,8 +20,10 @@ const Profile = () => {
     const [cookies, setCookies] = useCookies(['access-token', 'refresh-token'])
     const token = cookies['access-token']
     const [data, setData] = useState(useLoaderData().user)
-
- 
+    const params = useParams().username
+    useEffect(()=>{
+        // window.location.reload()
+    }, [params])
     const user = useSelector((state) => {
         const value = state.user.user ? state.user.user : state.user
         return value

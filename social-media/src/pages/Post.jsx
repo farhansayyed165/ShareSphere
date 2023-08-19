@@ -72,13 +72,12 @@ const Post = () => {
                         <span className='flex items-center'>
                             <Link to={`/${"Sayyed"}`} className='mr-10'>
                                 <div className='profile flex items-center my-3'>
-                                    <img className='w-12 h-12 rounded-full object-cover mr-4 shadow' src={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'} alt={`'s profile image`} />
-                                    <h1 className='text-lg font-semibold text-gray-900 -mt-1'>{"Farhan Sayyed"}</h1>
+                                    <img className='w-12 h-12 rounded-full object-cover mr-4 shadow' src={data.user.avatar} alt={`${data.user.fullname}'s profile image`} />
+                                    <h1 className='text-lg font-semibold text-gray-900 -mt-1'>{data.user.fullname}</h1>
                                 </div>
                             </Link>
                             <p className='text-gray-600 my-3 mt-2 '>{timeSince(Date.parse(data.addedDate))}</p>
                         </span>
-                        <h2 className='text-lg font-semibold mb-1'>{data.title}</h2>
                         <p className='text-gray-800 mb-5'>{data.content}</p>
                         <div className='w-full flex items-center justify-evenly mt-3'>
                             <LikeButton login={user.login} postId={data._id} token={token} postData={data} setPostData={setData} user={user}></LikeButton>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import { createUser, loginUser } from '../api/userApi';
 import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,12 +15,12 @@ const CreateUser = () => {
     const [navigateTo, setNavigateTo] = useOutletContext()
     const navigate = useNavigate()
     const [cookies, setCookies] = useCookies(['access-token', 'refresh-token'])
-    const [userDetail, setUserDetail] = useState({ fullname: "", username: "", password: "", confirmPassword: "", email: "", gender: "", avatar:"", tagLine:"", about:"" })
+    const [userDetail, setUserDetail] = useState({ fullname: "", username: "", password: "", confirmPassword: "", email: "", gender: "", subText:"", about:"" })
     const [avatar, setAvatar]= useState() 
     const redirectToPreviousPage = useLocation().state?.redirectLink ? useLocation().state.redirectLink : "/";
     const dispatch = useDispatch();
     const [toggleSection, setToggleSection] = useState(true)
-
+    const form = useRef()
     async function uploadImage() {
         if (avatar == userDetail.avatar || !avatar) {
           return userDetail
@@ -99,8 +99,8 @@ const CreateUser = () => {
                             type="text"
                             placeholder='Headline'
                             onChange={handleChange}
-                            value={userDetail.tagLine}
-                            name='tagLine'
+                            value={userDetail.subText}
+                            name='subText'
                             className='w-9/10'
                         />
                         <textarea
