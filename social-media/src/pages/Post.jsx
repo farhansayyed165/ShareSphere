@@ -18,6 +18,7 @@ import { getCommentsPaginated } from '../api/commentApi';
 export async function loader({ params }) {
     const { postId } = params;
     const response = await getPost(postId)
+    console.log(response)
     const comments = await getCommentsPaginated(response._id)
     return {response, comments}
 }
@@ -58,19 +59,18 @@ const Post = () => {
 
 
     return (
-        <main className='w-full relative flex items-center justify-center border-2 h-screen -mt-5  bg-white'>
-            <div className='w-full hidden md:flex md:w-10/12 border-2 max-h-[90vh]  bg-white shadow-lg'>
-                <div className='px-4 mt-2 w-1/2 max-h-[90vh] overflow-scroll hide-scroll flex items-center'>
+        <main className='w-full relative flex  justify-center mt-2   bg-white'>
+            <div className='w-full hidden md:flex md:w-10/12  max-h-[90vh]  bg-white shadow-lg'>
+                <div className='px-4 mt-2 w-1/2 max-h-[90vh] overflow-scroll hide-scroll hidden md:flex items-center'>
                     {
                         <Carousel items={data.images} maxW={true} />
                     }
                 </div>
                 <div className='relative w-1/2 p-3 mx-4 overflow-scroll hide-scroll'>
                     <GrMore className='absolute top-0 right-0  my-3' size={20}></GrMore>
-
                     <div className='mb-4'>
                         <span className='flex items-center'>
-                            <Link to={`/${"Sayyed"}`} className='mr-10'>
+                            <Link to={`/${data.user.username}`} className='mr-10'>
                                 <div className='profile flex items-center my-3'>
                                     <img className='w-12 h-12 rounded-full object-cover mr-4 shadow' src={data.user.avatar} alt={`${data.user.fullname}'s profile image`} />
                                     <h1 className='text-lg font-semibold text-gray-900 -mt-1'>{data.user.fullname}</h1>
@@ -95,12 +95,12 @@ const Post = () => {
                 </div>
             </div>
 
-            <div className='md:hidden my-4 border-2 py-2 px-5 w-full mt-[820px] text-[0.9rem]'>
+            <div className='md:hidden my-4 border-2 py-2 px-5 w-full text-[0.9rem]'>
                 <div className=''>
-                    <Link to={`/Sayyed`}>
+                    <Link to={`/${data.user.username}`}>
                         <div className=' flex items-center  mt-3 mb-2'>
-                            <img className='w-12 h-12 rounded-full object-cover mr-4 shadow' src={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'} alt={`'s profile image`} />
-                            <h1 className='text-lg font-semibold text-gray-900 -mt-1'>{"Farhan Sayyed"}</h1>
+                            <img className='w-12 h-12 rounded-full object-cover mr-4 shadow' src={data.user.avatar} alt={`${data.user.fullname}'s profile image`} />
+                            <h1 className='text-lg font-semibold text-gray-900 -mt-1'>{data.user.fullname}</h1>
                         </div>
                     </Link>
                     <p className='text-gray-700 text-left mb-6 text-xs'>{timeSince(Date.parse(data.addedDate))} ago</p>
@@ -111,7 +111,10 @@ const Post = () => {
                     </div>
 
                     {
-                        data.images.length > 0 ? <Carousel items={data.images} /> : <></>
+                        data.images.length > 0 ?    <div className="w-full">
+                            <Carousel items={data.images} maxW /> 
+                        </div>
+                         : <></>
                     }
                     <div className='flex items-center justify-evenly '>
 

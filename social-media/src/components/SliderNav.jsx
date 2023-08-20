@@ -6,7 +6,8 @@ import { BsSearch } from 'react-icons/bs'
 function SliderNav({ open, close, handleLogout, token, user, setHamburg, hamburg }) {
   function closeSlider() {
     setHamburg(false)
-    document.body.style.overflow = 'unset';
+    document.body.style.overflow = 'unset'; 
+    document.body.style.overflowX = 'hidden'; 
 }
   function openCreatePost(){
     open()
@@ -39,7 +40,7 @@ function SliderNav({ open, close, handleLogout, token, user, setHamburg, hamburg
     </>
   )
   return (
-    <section className={`sm:hidden w-full z-49 bg-black/40 flex justify-center items-center`}>
+    <section className={`sm:hidden absolute w-full z-49 bg-black/40 flex justify-center items-center`}>
       <div 
       onClick={closeSlider}
       className={`${hamburg ? " ":" opacity-0 pointer-events-none"} z-50 transition-all duration-300 w-full h-screen absolute left-0 top-0 bg-black/30`}>

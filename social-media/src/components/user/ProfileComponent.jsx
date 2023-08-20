@@ -44,7 +44,7 @@ function ProfileComponent({ data, user, token, setData   }) {
                 <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center relative">
                     <img alt="..." src={data.avatar} className="shadow-xl rounded-full h-[170px] align-middle border-none absolute -m-16 -ml-10 lg:-ml-16 w-[170px] object-cover  " />
                 </div>
-                <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
+                <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right md:justify-normal sm:mt-[100px] md:mt-0 lg:block flex justify-center lg:self-center">
                   <div className="py-6 px-3 mt-32 sm:mt-0">
                     {renderEdit}
                   </div>

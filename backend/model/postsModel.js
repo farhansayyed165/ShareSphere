@@ -10,7 +10,6 @@ const postsSchema = mongoose.Schema({
         type:Array,
         default:[]
     },
-    // userId
     addedDate:{
         type:Date,
         required:true,
