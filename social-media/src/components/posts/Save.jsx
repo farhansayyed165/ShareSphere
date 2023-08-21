@@ -22,7 +22,7 @@ function Save({postId, setPostData, user, token}) {
           })
         })
     }
-    const saveButtonText = user.saved?.includes(postId) ? <FaRegBookmark/>:<FaBookmark/>
+    const saveButtonText = user.saved?.includes(postId) ? <FaBookmark/>:<FaRegBookmark/>
   return (
     <button onClick={handleSave}>{saveButtonText}</button>
   )

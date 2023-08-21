@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
+import {AiOutlineRight, AiOutlineLeft} from 'react-icons/ai'
 
 function Carousel({ items, id, maxW }) {
     const [slideState, setSlideState] = useState(0);
@@ -10,7 +10,7 @@ function Carousel({ items, id, maxW }) {
                 {items.length >1 && <div className='absolute top-0 z-50 right-0 bg-white/75 px-2 py-2 m-2 rounded-full'>
                  <p className=' font-normal text-xs z-'>{slideState+1}</p>
                 </div>}
-                <img src={item} alt="" className='w-full transition-all duration-700 ease-in-out object-cover items-center m-auto z-40' />
+                <img src={item} alt="" className='w-full transition-all duration-700 max-h-[670px] ease-in-out object-cover items-center m-auto z-40' />
             </div>
         )
     })
@@ -50,7 +50,7 @@ function Carousel({ items, id, maxW }) {
     }
 
     return (
-        <div className={`relative ${maxW ? `md:max-w-full lg:max-w-3/4 `:"max-w-lg"}   flex items-center justify-center m-auto `}  data-carousel="slide">
+        <div className={`relative ${maxW ? `md:max-w-full lg:max-w-3/4 `:"sm:max-w-[85%]"}   flex items-center justify-center m-auto `}  data-carousel="slide">
             {/* Carouse-wrapper */}
             <div className='relative max-w-full bg-black flex items-center overflow-hidden rounded-lg transition-all duration-500 ease-linear' >
                 {slides}
@@ -59,13 +59,13 @@ function Carousel({ items, id, maxW }) {
 
                     <button type='button' className={`${renderButtons.previous ? " " : "hidden"} z-[50] absolute top-0 left-0  flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none`} data-carousel-prev onClick={changeSlidePrevious}>
                         <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white dark:white-800/30 group-hover:bg-white/30 dark:group-hover:bg-white-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <AiOutlineArrowLeft></AiOutlineArrowLeft>
+                            <AiOutlineLeft></AiOutlineLeft>
                             <span className="sr-only">Previous</span>
                         </span>
                     </button>
                     <button type="button" className={`${renderButtons.next ? " " : "hidden"} z-[50] absolute top-0 right-0 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none`} data-carousel-next onClick={changeSlideNext}>
                         <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white dark:white-800/30 group-hover:bg-white/30 dark:group-hover:bg-white-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <AiOutlineArrowRight></AiOutlineArrowRight>
+                            <AiOutlineRight></AiOutlineRight>
                             <span className="sr-only">Next</span>
                         </span>
                     </button>

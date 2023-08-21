@@ -9,7 +9,8 @@ export default {
     extend: {
       fontSize:{
         pClamp:"clamp(0.4rem, 3vw, 0.8rem)",
-        h1Clamp:"clamp(1.25rem, 10vw, 4rem)",
+        h1Clamp:"clamp(1rem, 5vw, 4rem)",
+        h3Clamp:"clapm(0.5rem, 6vw, 0.8rem)"
       }
       ,maxWidth:{
         '1/4':'25%',

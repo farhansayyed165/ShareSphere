@@ -21,7 +21,6 @@ export default function Headers({ render, hamburg, setHamburg }) {
             .then(res=>{
 
                 setSearchRecommend(res)
-                console.log(res)
             })
         }
         
@@ -79,7 +78,7 @@ export default function Headers({ render, hamburg, setHamburg }) {
                     {
                         render
                     }
-                    <RxHamburgerMenu size={30} className={`${hamburg ? "hidden" : "inline-bloxk"} sm:hidden absolute top-0 right-0 z-[100] mr-3 mt-3`} onClick={openSlider} />
+                    <RxHamburgerMenu size={30} className={`${hamburg ? "hidden" : "inline-bloxk"} cursor-pointer sm:hidden absolute top-0 right-0 z-[100] mr-3 mt-3`} onClick={openSlider} />
 
 
                 </nav>

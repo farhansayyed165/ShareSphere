@@ -90,7 +90,9 @@ const Post = () => {
                     </div>
                     <div>
                         {createComponent}
-                        <CommentInfScroll data={data} commentsArray={useLoaderData().comments}></CommentInfScroll>
+                        {useLoaderData.comments ? <CommentInfScroll data={data} commentsArray={useLoaderData().comments}></CommentInfScroll>: 
+                        <h1 className='text-center w-full font-semibold'>Be the first to comment!</h1>
+                        }
                     </div>  
                 </div>
             </div>

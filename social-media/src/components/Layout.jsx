@@ -53,9 +53,19 @@ export default function Layout() {
     }
 
 
+    const sliderNav = <SliderNav
+    open={openCreatePost}
+    close={closeCreatePost}
+    handleLogout={handleLogout}
+    user={user}
+    token={token}
+    render={renderHeaderElements}
+    setHamburg={setHamburg}
+    hamburg={hamburg}
+/>
     return (
         <section >
-            {renderHeaders && <Headers open={openCreatePost} close={closeCreatePost} handleLogout={handleLogout} user={user} token={token} render={renderHeaderElements} setHamburg={setHamburg} hamburg={hamburg} />}
+            {renderHeaders && <Headers open={openCreatePost} slider={sliderNav} close={closeCreatePost} handleLogout={handleLogout} user={user} token={token} render={renderHeaderElements} setHamburg={setHamburg} hamburg={hamburg} />}
             {showCreate && <Submit close={closeCreatePost} />}
             {<SliderNav
                 open={openCreatePost}
