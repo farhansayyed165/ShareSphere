@@ -1,56 +1,61 @@
 import React, { useState, useEffect } from 'react'
-import {AiOutlineRight, AiOutlineLeft} from 'react-icons/ai'
+import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai'
+import { ImCross } from 'react-icons/im'
 
-function Carousel({ items, id, maxW }) {
+function Carousel({ items, id, maxW, edit }) {
     const [slideState, setSlideState] = useState(0);
     const [renderButtons, setRenderButtons] = useState({ previous: false, next: true })
     const slides = items.map((item, i) => {
         return (
             <div className={`${slideState == i ? "current-slide" : "hidden"} w-full bg-gray-30 transition-all duration-700 ease-in-out flex justify-center items-center object-center z-40`} data-carousel-item key={i} slide={i}>
-                {items.length >1 && <div className='absolute top-0 z-50 right-0 bg-white/75 px-2 py-2 m-2 rounded-full'>
-                 <p className=' font-normal text-xs z-'>{slideState+1}</p>
+                {items.length > 1 && <div className='absolute top-0 z-50 right-0 bg-white/75 px-2 py-2 m-2 rounded-full'>
+                    <p className=' font-normal text-xs z-'>{slideState + 1}</p>
                 </div>}
+                {
+                    edit ? <span className='absolute top-0 left-0 z-[101] pt-2 pl-2 '><ImCross size={20} style={{ stroke: "black", strokeWidth: "1x"}} color='white' /></span> : <></>
+                }
+                {/* <span className='absolute top-0 left-0 pl-2 pt-2 z-[101]'><ImCross size={20} color='white'/></span>  */}
                 <img src={item} alt="" className='w-full transition-all duration-700 max-h-[670px] ease-in-out object-cover items-center m-auto z-40' />
             </div>
         )
     })
 
     useEffect(() => {
-        if(slideState == 0){
+        if (slideState == 0) {
             setRenderButtons({ previous: false, next: true })
             return;
         }
-        if(slideState ==  items.length - 1){
+        if (slideState == items.length - 1) {
             setRenderButtons({ previous: true, next: false })
             return;
         }
-        else{
+        else {
             setRenderButtons({ previous: true, next: true })
             return;
         }
 
     }, [slideState]);
 
-    function changeSlideNext(){
-        if(!(slideState==items.length-1)){
-            setSlideState(slideState+1)
+    function changeSlideNext() {
+        if (!(slideState == items.length - 1)) {
+            setSlideState(slideState + 1)
         }
-        else{
+        else {
             setSlideState(slideState)
         }
     }
-    
-    function changeSlidePrevious(){
-        if(!(slideState==0)){
-            setSlideState(slideState-1)
+
+    function changeSlidePrevious() {
+        if (!(slideState == 0)) {
+            setSlideState(slideState - 1)
         }
-        else{
+        else {
             setSlideState(slideState)
         }
     }
 
     return (
-        <div className={`relative ${maxW ? `md:max-w-full lg:max-w-3/4 `:"sm:max-w-[85%]"}   flex items-center justify-center m-auto `}  data-carousel="slide">
+        <div className={`relative ${maxW ? `md:max-w-full lg:max-w-3/4 ` : "sm:max-w-[85%]"}   flex items-center justify-center m-auto `} data-carousel="slide">
             {/* Carouse-wrapper */}
             <div className='relative max-w-full bg-black flex items-center overflow-hidden rounded-lg transition-all duration-500 ease-linear' >
                 {slides}

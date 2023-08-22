@@ -1,21 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { nanoid } from 'nanoid';
 import Carousel from './Carousel';
 import {BsFillImageFill} from 'react-icons/bs'
-import { image } from '@cloudinary/url-gen/qualifiers/source';
 
-const Image = ({ images, setImages }) => {
+const Image = ({ images, setImages, imageLink }) => {
     const inputField = useRef(null)
-    const [imageUrl, setImageUrl] = useState([]);
-    useEffect(() => {
-        if (images.length < 1) {
-            return
-        }
-        
-
-    }, [images])
-    console.log(imageUrl)
-    console.log(images)
+    const [imageUrl, setImageUrl] = useState(imageLink ? imageLink : []);
     function ChangeUrl(e){
         const arr = [...images, ...e.target.files]
         setImages(arr)
@@ -40,7 +29,7 @@ const Image = ({ images, setImages }) => {
                 <button onClick={handleClick} className=' border-2 border-slate-600 rounded p-2'><BsFillImageFill/></button>
                 <input type="file" multiple onChange={onImageChange} className='hidden' ref={inputField}/>
                 <div className='flex'>
-                    <Carousel items={imageUrl}></Carousel>
+                    <Carousel items={imageUrl} edit={true}></Carousel>
                 </div>
             </div>
     );

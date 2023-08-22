@@ -70,6 +70,10 @@ const createPost = asyncHandler(async (req, res) => {
 });
 
 const deletePost = asyncHandler(async (req, res) => {
+    if(!(req.params.id)){
+        res.status(400)
+        throw new Error("No post id provided")
+    }
     const userId = req.user._id
     const post = await Post.findById(req.params.id)
     const user = await User.findById(userId)
@@ -81,10 +85,16 @@ const deletePost = asyncHandler(async (req, res) => {
     postsArray.splice(postsArray.indexOf(post._id),1)
     await Post.deleteOne();
     await User.findByIdAndUpdate(userId, {posts:postsArray},{new:true})
+    await Comment.deleteMany({postId:req.params.id})
     res.json(post).status(200);
 })
 
 const updatePost = asyncHandler(async (req, res) => {
+    if(!(req.params.id)){
+        res.status(400)
+        console.log("data id is not there")
+    }
+    console.log(req.params.id)
     const post = await Post.findById(req.params.id)
     if (!post) {
         res.status(404)

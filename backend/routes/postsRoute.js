@@ -27,6 +27,6 @@ router.put("/save/:postId", validateToken, savePost)           //PUT
 
 router.put("/likePost/:id",validateToken, likePost);           //PUT
 
-router.delete("/:id", deletePost);// api/posts/                //DELETE
+router.delete("/:id",validateToken ,deletePost);// api/posts/                //DELETE
 
 module.exports = router;

@@ -75,3 +75,25 @@ export async function likePost(id,token){
         return new Error(err)
     }
 } 
+
+export async function updatePost(data, token){
+    try{
+        console.log(data)
+        const response = await fetch(`/api/posts/updatePost/${data._id}`,{
+            method:"PUT",
+            headers:{
+                'content-type':'application/json',
+                authorization:`Bearer ${token}`
+            },
+            redirect: "follow", 
+            referrerPolicy: "no-referrer", 
+            body: JSON.stringify(data), 
+        })
+        return response.json()
+    }
+    catch(err){
+        console.log(err)
+        return new Error(err)
+    }
+    
+}

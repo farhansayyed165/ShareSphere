@@ -38,6 +38,9 @@ const router = createBrowserRouter(createRoutesFromElements(
 
       <Route path='posts'>
         <Route path=':postId' element={<Post />} loader={PostLoader} />
+        <Route path='editProfile'>
+            <Route path=':postId'></Route>
+        </Route>
       </Route>
       <Route path='/logout' element></Route>
   </Route>

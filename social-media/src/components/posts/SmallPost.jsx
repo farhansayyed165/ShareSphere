@@ -9,8 +9,9 @@ import { ImCross } from 'react-icons/im'
 import {FaBookmark, FaRegBookmark} from 'react-icons/fa'
 import Save from './Save'
 
-function SmallPost({ data, user, token }) {
+function SmallPost({ data, user, token, setShowEdit, showEditPost, edit }) {
   const [showMore, setShowMore] = useState(false)
+
   const navigate = useNavigate()
   const [postData, setPostData] = useState(data)
   const content = data.content ? (data.content.length > 200 ? data.content.substring(0, 200) + "..." : data.content) : ""
@@ -22,10 +23,11 @@ function SmallPost({ data, user, token }) {
     e.preventDefault()
     setShowMore(false)
   }
+
+
   return (
     <div className='lg:w-[700px] md:w-[500px]  my-4 border-2 rounded-md  py-2 px-5 w-full z-40 bg-white' >
       <div className={`${showMore ? "" : " opacity-0 pointer-events-none"} fixed top-0 left-0 w-full h-full z-50`} onClick={closeMore}>
-
       </div>
       <div className={`absolute ${showMore ? "" : " opacity-0 pointer-events-none"} text-left w-[120px] lg:translate-x-[450%] z-[51] md:translate-x-[300%] md:right-[unset] mt-10 mr-3  right-0 border-2 transition-all p-2 duration-200 ease-in-out bg-gray-100 shadow-lg rounded`}>
         <div className='w-full ml-auto flex flex-row-reverse mb-2 ' >
@@ -45,7 +47,7 @@ function SmallPost({ data, user, token }) {
         {(postData.user.username == user?.username) && 
         <>
       
-          <p className='cursor-pointer  py-2'>Edit Post</p>
+          <p className='cursor-pointer  py-2' onClick={showEditPost}>Edit Post</p>
         
       
           <p className='text-red-500 cursor-pointer font-semibold py-2'>Delete post</p>
