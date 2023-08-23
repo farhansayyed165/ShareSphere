@@ -17,8 +17,7 @@ function EditPost({data, close, showEdit}) {
     //setting up form data with images array empty for now
     const [formData, setFormData] = useState({
         content: data.content,
-        images: data.images ? data.images:[],
-        _id:data._id
+        images: data.images
     });
     
     const formRef = useRef()
@@ -28,6 +27,9 @@ function EditPost({data, close, showEdit}) {
             bg.current?.scrollIntoView({behavior:"smooth"})
         }
     },[showEdit])
+    useEffect(()=>{
+        setFormData(prev=>({...prev, images:img}))
+    },[img])
     
     
     

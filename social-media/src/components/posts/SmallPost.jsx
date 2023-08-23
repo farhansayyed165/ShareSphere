@@ -14,7 +14,7 @@ function SmallPost({ data, user, token, setShowEdit, showEditPost, edit }) {
 
   const navigate = useNavigate()
   const [postData, setPostData] = useState(data)
-  const content = data.content ? (data.content.length > 200 ? data.content.substring(0, 200) + "..." : data.content) : ""
+  const content = data?.content ? (data.content.length > 200 ? data.content.substring(0, 200) + "..." : data.content) : ""
   function more(e) {
     e.preventDefault()
     setShowMore(!showMore)
@@ -40,11 +40,11 @@ function SmallPost({ data, user, token, setShowEdit, showEditPost, edit }) {
           {user.login &&
             <span className='cursor-pointer  py-2 flex items-center'>
               <p className='mr-1'>Save</p>
-              <Save user={user} token={token} setPostData={setPostData} postId={postData._id}></Save>
+              <Save user={user} token={token} setPostData={setPostData} postId={postData?._id}></Save>
             </span>
           }
 
-        {(postData.user.username == user?.username) && 
+        {(postData?.user.username == user?.username) && 
         <>
       
           <p className='cursor-pointer  py-2' onClick={showEditPost}>Edit Post</p>
@@ -60,26 +60,26 @@ function SmallPost({ data, user, token, setShowEdit, showEditPost, edit }) {
         <button className=' w-20 absolute right-0 -mr-3 cursor-pointer' onClick={more}>
           <GrMore className='w-20 absolute right-0 -mr-3 cursor-pointer' size={22}  ></GrMore>
         </button>
-        <Link to={`/${postData.user.username}`} className=' '>
+        <Link to={`/${postData?.user.username}`} className=' '>
           <div className='profile flex items-center  mt-3 mb-2 w-[80%]'>
-            <img className='w-12 h-12 rounded-full object-cover mr-4 shadow' src={postData.user.avatar} alt={`${postData.user.fullname}'s profile image`} />
-            <h1 className='text-lg font-semibold text-gray-900 -mt-1'>{postData.user.fullname}</h1>
+            <img className='w-12 h-12 rounded-full object-cover mr-4 shadow' src={postData?.user.avatar} alt={`${postData?.user.fullname}'s profile image`} />
+            <h1 className='text-lg font-semibold text-gray-900 -mt-1'>{postData?.user.fullname}</h1>
           </div>
         </Link>
-        <p className='text-gray-700 text-left mb-6 text-xs'>{timeSince(Date.parse(data.addedDate))} ago</p>
-        <div onClick={() => { navigate(`/posts/${data._id}`) }} className='max-w-full mb-8 cursor-pointer'>
+        <p className='text-gray-700 text-left mb-6 text-xs'>{timeSince(Date.parse(data?.addedDate))} ago</p>
+        <div onClick={() => { navigate(`/posts/${data?._id}`) }} className='max-w-full mb-8 cursor-pointer'>
 
           <p className='text-gray-700 max-w-full text-left text-h3Clamp'>{content}</p>
         </div>
 
         {
-          data.images.length > 0 ? <Carousel items={data.images} /> : <></>
+          data?.images.length > 0 ? <Carousel items={data?.images} /> : <></>
         }
         <div className='flex items-center justify-center '>
 
-          <LikeButton token={token} login={user.login} postData={postData} setPostData={setPostData} postId={data._id} user={user}></LikeButton>
+          <LikeButton token={token} login={user.login} postData={postData} setPostData={setPostData} postId={data?._id} user={user}></LikeButton>
 
-          <div className="flex items-center justify-center mx-10 my-4"><CgComment /><p className='mx-2'>{data.comments?.length}</p></div>
+          <div className="flex items-center justify-center mx-10 my-4"><CgComment /><p className='mx-2'>{data?.comments?.length}</p></div>
         </div>
       </div>
 

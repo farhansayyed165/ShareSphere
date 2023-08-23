@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Carousel from './Carousel';
+import EditCarousel from './EditCarousel';
 import {BsFillImageFill} from 'react-icons/bs'
 
 const Image = ({ images, setImages, imageLink }) => {
     const inputField = useRef(null)
+    const [slideState, setSlideState] = useState(0)
     const [imageUrl, setImageUrl] = useState(imageLink ? imageLink : []);
     function ChangeUrl(e){
         const arr = [...images, ...e.target.files]
@@ -24,12 +25,18 @@ const Image = ({ images, setImages, imageLink }) => {
         e.preventDefault()
         inputField.current.click()
     }
+    function onEditClick(e){
+        setImages(prev=>{
+            const newArr = prev.splice(slideState, 1)
+            return newArr
+        })
+    }
     return (
             <div className='mb-4'>
                 <button onClick={handleClick} className=' border-2 border-slate-600 rounded p-2'><BsFillImageFill/></button>
                 <input type="file" multiple onChange={onImageChange} className='hidden' ref={inputField}/>
                 <div className='flex'>
-                    <Carousel items={imageUrl} edit={true}></Carousel>
+                    <EditCarousel items={imageUrl} edit={true} handleEditClick={onEditClick} slideState={slideState} setSlideState={setSlideState}></EditCarousel>
                 </div>
             </div>
     );
