@@ -18,7 +18,6 @@ import { getCommentsPaginated } from '../api/commentApi';
 export async function loader({ params }) {
     const { postId } = params;
     const response = await getPost(postId)
-    console.log(response)
     const comments = await getCommentsPaginated(response._id)
     return {response, comments}
 }

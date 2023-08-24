@@ -6,12 +6,10 @@ import { CgComment } from 'react-icons/cg'
 import { timeSince } from '../../utils/parseDate'
 import { GrMore } from "react-icons/gr"
 import { ImCross } from 'react-icons/im'
-import {FaBookmark, FaRegBookmark} from 'react-icons/fa'
 import Save from './Save'
 
-function SmallPost({ data, user, token, setShowEdit, showEditPost, edit }) {
+function SmallPost({ data, user, token }) {
   const [showMore, setShowMore] = useState(false)
-
   const navigate = useNavigate()
   const [postData, setPostData] = useState(data)
   const content = data?.content ? (data.content.length > 200 ? data.content.substring(0, 200) + "..." : data.content) : ""
@@ -22,6 +20,9 @@ function SmallPost({ data, user, token, setShowEdit, showEditPost, edit }) {
   function closeMore(e){
     e.preventDefault()
     setShowMore(false)
+  }
+  function navigateToEditPost(){
+    navigate(`/edit/${data._id}`)
   }
 
 
@@ -43,11 +44,10 @@ function SmallPost({ data, user, token, setShowEdit, showEditPost, edit }) {
               <Save user={user} token={token} setPostData={setPostData} postId={postData?._id}></Save>
             </span>
           }
-
         {(postData?.user.username == user?.username) && 
         <>
       
-          <p className='cursor-pointer  py-2' onClick={showEditPost}>Edit Post</p>
+          <p className='cursor-pointer  py-2' onClick={navigateToEditPost}>Edit Post</p>
         
       
           <p className='text-red-500 cursor-pointer font-semibold py-2'>Delete post</p>

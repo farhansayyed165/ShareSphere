@@ -15,7 +15,7 @@ function EditCarousel({ items, maxW, edit, handleEditClick, slideState, setSlide
                     edit ? <span className='absolute top-0 left-0 z-[101] pt-2 pl-2 ' slide={i} onClick={handleEditClick}><ImCross size={20} slide={i} style={{ stroke: "black", strokeWidth: "1x"}} color='white' /> <span slide={i}></span></span> : <></>
                 }
                 {/* <span className='absolute top-0 left-0 pl-2 pt-2 z-[101]'><ImCross size={20} color='white'/></span>  */}
-                <img src={item} alt="" className='w-full transition-all duration-700 max-h-[670px] ease-in-out object-cover items-center m-auto z-40' />
+                <img src={item} alt="" className='max-w-full h-[400px] transition-all duration-700 ease-in-out object-cover items-center m-auto z-40' />
             </div>
         )
     })
@@ -55,7 +55,7 @@ function EditCarousel({ items, maxW, edit, handleEditClick, slideState, setSlide
     }
 
     return (
-        <div className={`relative ${maxW ? `md:max-w-full lg:max-w-3/4 ` : "sm:max-w-[85%]"}   flex items-center justify-center m-auto `} data-carousel="slide">
+        <div className={`relative ${maxW ? `md:max-w-full lg:max-w-3/4 ` : "sm:max-w-[85%]"}  flex items-center justify-center m-auto `} data-carousel="slide">
             {/* Carouse-wrapper */}
             <div className='relative max-w-full bg-black flex items-center overflow-hidden rounded-lg transition-all duration-500 ease-linear' >
           

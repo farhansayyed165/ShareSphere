@@ -14,6 +14,7 @@ import WillNotLoadIfLoggedIn from './components/NotRequired'
 import UsernameError from './components/error/UsernameError'
 import Search from './pages/Search'
 import Settings, {loader as SettingsLoader} from './pages/Settings'
+import EditPost, {loader as EditPostLoader} from './pages/EditPost'
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -36,11 +37,11 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path='submit' element={<Submit />} />
       </Route>
 
+        <Route path='edit'>
+            <Route path=':postId' element={<EditPost/>} loader={EditPostLoader}></Route>
+        </Route>
       <Route path='posts'>
         <Route path=':postId' element={<Post />} loader={PostLoader} />
-        <Route path='editProfile'>
-            <Route path=':postId'></Route>
-        </Route>
       </Route>
       <Route path='/logout' element></Route>
   </Route>

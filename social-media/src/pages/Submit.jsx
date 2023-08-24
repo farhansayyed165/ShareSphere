@@ -71,7 +71,6 @@ const Submit = ({ close }) => {
         }
         // using for loop after trying .map and forEach
         for (let i = 0; i < img.length; i++) {
-            console.log("in loop")
             let image = img[i];
             let imageData = new FormData();
             imageData.append('file', image);
@@ -82,7 +81,6 @@ const Submit = ({ close }) => {
                 body: imageData
             })
             const data = await response.json()
-            console.log(data.secure_url)
             //storing the url in our array
             images.push(data.secure_url)
 
@@ -100,11 +98,11 @@ const Submit = ({ close }) => {
 
     return (
         <div className='w-full absolute z-50 h-full bg-black/70 overflow-scroll'>
-            {<span className={`absolute ${(upload.done || upload.uploading) ? "top-0":"-top-20"} transition-all duration-200 ease-in-out w-full flex justify-center`}>
+            {<span className={`fixed ${(upload.done || upload.uploading) ? "top-0":"-top-20"} transition-all duration-200 ease-in-out w-full flex justify-center`}>
                 <p className={`text-white  p-1 px-5 border-2 ${upload.done ? " bg-green-500 border-green-800":"bg-main-orange border-darker-orange"} uppercase font-[Karla] text-lg font-semibold `}>{upload.done ? "DONE!":"Uploading Post!"}</p>
             </span>}
-            <div className='flex items-center justify-center mt-3 w-full '>
-                <div className='w-3/4 md:w-1/2  bg-white border-2 border-slate-400 p-8 shadow-md'>
+            <div className='flex items-center justify-center mt-3 w-full mb-10'>
+                <div className='w-3/4  bg-white border-2 border-slate-400 p-8 shadow-md'>
                     <h2>Create Post</h2>
                     <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-700 rounded"></hr>
                     <form onSubmit={handleSubmit} ref={formRef} >

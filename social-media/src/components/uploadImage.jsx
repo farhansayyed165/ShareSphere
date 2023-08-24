@@ -32,7 +32,7 @@ const Image = ({ images, setImages, imageLink }) => {
         })
     }
     return (
-            <div className='mb-4'>
+            <div className='mb-3    '>
                 <button onClick={handleClick} className=' border-2 border-slate-600 rounded p-2'><BsFillImageFill/></button>
                 <input type="file" multiple onChange={onImageChange} className='hidden' ref={inputField}/>
                 <div className='flex'>
