@@ -7,6 +7,7 @@ import { updatePost, getPost } from '../api/postApi'
 export async function loader({ params }) {
     const { postId } = params
     const response = await getPost(postId)
+    // console.log(response)
     return response
 }
 
@@ -20,6 +21,7 @@ function EditPost() {
     const [upload, setUpload] = useState({ uploading: false, done: false })
     //setting up form data with images array empty for now
     const [formData, setFormData] = useState({
+        id:data._id,
         content: data.content,
         images: data.images
     });
@@ -54,11 +56,10 @@ function EditPost() {
         }
         // setUpload(prev=>({...prev, uploading:true}))
         if (img == formData.images) {
-            console.log("unchanged images", formData)
+            // console.log("unchanged images", formData)
         }
         const form = await uploadImages()
-        uploadImages()
-        console.log(form)
+        // console.log(form)
         const response = await updatePost(form, token)
         setUpload({ uploading: false, done: true })
         navigate(`/posts/${response._id}`)
@@ -110,7 +111,7 @@ function EditPost() {
                 <p className={`text-white  p-1 px-5 border-2 ${upload.done ? " bg-green-500 border-green-800" : "bg-main-orange border-darker-orange"} uppercase font-[Karla] text-lg font-semibold `}>{upload.done ? "DONE!" : "Uploading Post!"}</p>
             </span>}
             <div className='flex items-center justify-center mt-3 w-full mb-10'>
-                <div className='max-w-full md:max-w-3/4 max-h-[100vh]  bg-white border-2 border-slate-400 p-8 shadow-md'>
+                <div className='max-w-full md:max-w-3/4 max-h-[100vh] min-w-1/2  bg-white border-2 border-slate-400 p-8 shadow-md'>
                     <h2>Edit Post</h2>
                     <hr className="h-px mb-5 mt-2 bg-gray-200 border-0 dark:bg-gray-700 rounded"></hr>
                     <form onSubmit={handleSubmit} ref={formRef} >

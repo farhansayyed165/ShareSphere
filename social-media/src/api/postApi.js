@@ -79,7 +79,7 @@ export async function likePost(id,token){
 export async function updatePost(data, token){
     try{
         console.log(data)
-        const response = await fetch(`/api/posts/updatePost/${data._id}`,{
+        const response = await fetch(`/api/posts/updatePost/${data.id}`,{
             method:"PUT",
             headers:{
                 'content-type':'application/json',

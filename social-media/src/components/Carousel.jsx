@@ -65,7 +65,7 @@ const Carousel = forwardRef(function ({ items, id, maxW, edit, handleEditClick }
                 {/* {Slides Control} */}
                 {items.length > 1 ? <>
 
-                    <button type='button' className={`${renderButtons.previous ? " " : "hidden"} z-[50] absolute top-0 left-0  flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none`} data-carousel-prev onClick={changeSlidePrevious}>
+                    <button type='button' className={`${renderButtons.previous ? " " : "hidden"} z-[50] absolute top-0 left-0  flex items-center justify-center h-full   px-4 cursor-pointer group focus:outline-none`} data-carousel-prev onClick={changeSlidePrevious}>
                         <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white dark:white-800/30 group-hover:bg-white/30 dark:group-hover:bg-white-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                             <AiOutlineLeft></AiOutlineLeft>
                             <span className="sr-only">Previous</span>

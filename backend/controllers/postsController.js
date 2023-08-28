@@ -90,7 +90,7 @@ const deletePost = asyncHandler(async (req, res) => {
 })
 
 const updatePost = asyncHandler(async (req, res) => {
-    if(!(req.params.id)){
+    if(!req.params.id){
         res.status(400)
         console.log("data id is not there")
     }
@@ -98,7 +98,7 @@ const updatePost = asyncHandler(async (req, res) => {
     const post = await Post.findById(req.params.id)
     if (!post) {
         res.status(404)
-        throw new Error("comment not found")
+        throw new Error("post not found")
     }
     const updatedPost = await Post.findByIdAndUpdate(
         req.params.id,

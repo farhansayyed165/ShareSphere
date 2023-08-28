@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useLoaderData, useLocation, useParams } from 'react-router-dom';
-import { getPost, getPosts } from '../api/postApi';
-import { useCookies } from 'react-cookie';
-import CreateComment from '../components/comment/CreateComment';
-import Save from '../components/posts/Save';
+import React, { useState } from 'react';
+import { useLoaderData, useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import LikeButton from '../components/posts/LikeButton';
+import { useCookies } from 'react-cookie';
 import { timeSince } from '../utils/parseDate';
+import { Link } from 'react-router-dom';
+import MoreOptionsPost from '../components/posts/MoreOptionsPost';
 import Carousel from '../components/Carousel';
+import LikeButton from '../components/posts/LikeButton';
+import Save from '../components/posts/Save';
+import CreateComment from '../components/comment/CreateComment';
+import CommentInfScroll from '../components/comment/CommentInfScroll';
+import { getPost } from '../api/postApi';
+import { getCommentsPaginated } from '../api/commentApi';
 import { CgComment } from 'react-icons/cg'
 import { GrMore } from "react-icons/gr"
-import CommentInfScroll from '../components/comment/CommentInfScroll';
-import { getCommentsPaginated } from '../api/commentApi';
 
 
 export async function loader({ params }) {
@@ -25,12 +26,7 @@ export async function loader({ params }) {
 
 
 const Post = () => {
-    // useEffect(() => {
-    //     getCommentsPaginated(data._id)
-    //         .then(res => {
-    //             setComments(res.results)
-    //         })
-    // }, [])
+    const navigate = useNavigate()
     const postId = useParams().postId
     const [data, setData] = useState(useLoaderData().response)
 
@@ -65,8 +61,10 @@ const Post = () => {
                         <Carousel items={data.images} maxW={true} />
                     }
                 </div>
-                <div className='relative w-1/2 p-3 mx-4 overflow-scroll hide-scroll'>
-                    <GrMore className='absolute top-0 right-0  my-3' size={20}></GrMore>
+                <div className='relative w-1/2 p-3 mx-4  overflow-scroll hide-scroll'>
+                <div className='relative'>
+                    <MoreOptionsPost token={token} user={user} setPostData={setData} postData={data} post={true}/>
+                </div>
                     <div className='mb-4'>
                         <span className='flex items-center'>
                             <Link to={`/${data.user.username}`} className='mr-10'>
@@ -98,6 +96,9 @@ const Post = () => {
 
             <div className='md:hidden my-4 border-2 py-2 px-5 w-full text-[0.9rem]'>
                 <div className=''>
+                    <div className='relative'>
+                    <MoreOptionsPost token={token} user={user} setPostData={setData} postData={data}/>
+                    </div>
                     <Link to={`/${data.user.username}`}>
                         <div className=' flex items-center  mt-3 mb-2'>
                             <img className='w-12 h-12 rounded-full object-cover mr-4 shadow' src={data.user.avatar} alt={`${data.user.fullname}'s profile image`} />
