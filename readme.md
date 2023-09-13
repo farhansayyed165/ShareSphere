@@ -25,5 +25,5 @@ Have questions, suggestions, or just want to chat about web development and the 
 ## 
 
 <p align="center">
-  <img src="/Screenshot 2023-09-12 230101.jpg" alt="ShareSphere Screenshot" width="600">
+  <img src="Screenshot 2023-09-12 230101.jpg" alt="ShareSphere Screenshot" width="600">
 </p>
