@@ -1,1 +1,0 @@
-export const BaseUrl = "https://social-media-backend-1656.onrender.com" 
