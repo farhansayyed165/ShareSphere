@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/frontend/public/logo.png" alt="ShareSphere Logo" width="150" height="150">
+  <img src="logo.png" alt="ShareSphere Logo" width="150" height="150">
 </p>
 
 # ShareSphere
