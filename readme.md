@@ -3,7 +3,7 @@
 </p>
 
 # ShareSphere
-<font size="2">Welcome to ShareSphere – Where Sharing Meets the Digital Sphere!</font>
+<font size="2">Welcome to [<strong>ShareSphere</strong>](https://share-sphere-165.netlify.app/) – Where Sharing Meets the Digital Sphere! ShareSphere is deployed [<strong>HERE</strong>](https://share-sphere-165.netlify.app/)</font>
 <hr>
 
 ## Introduction
